@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import styles from "./Header.module.css";
 import { SITE } from "../../lib/config.js";
 import BurgerMenu from "../BurgerMenu/BurgerMenu.jsx";
@@ -29,48 +29,70 @@ function openWhatsApp({ waPhone, lat, lng } = {}) {
 
 export default function HeaderClient() {
   const [gpsLoading, setGpsLoading] = useState(false);
-  const [theme, setTheme] = useState("dark");
   const [menuOpen, setMenuOpen] = useState(false);
 
+  // ✅ pentru popover-ul de telefoane
+  const [phoneMenuOpen, setPhoneMenuOpen] = useState(false);
+  const phoneWrapRef = useRef(null);
+
+  // ✅ WhatsApp: folosește un singur număr (SITE.whatsappPhone)
   const waPhone = useMemo(() => {
-    return String(SITE?.whatsappPhone ?? "").replace(/[^\d]/g, "");
+    const raw = SITE?.whatsappPhone ?? "";
+    return String(raw).replace(/[^\d]/g, "");
   }, []);
 
-  /* ================= THEME ================= */
-  useEffect(() => {
+  /* ================= THEME (fără setState în effect) ================= */
+  const getInitialTheme = () => {
+    if (typeof window === "undefined") return "dark";
+
     const saved = localStorage.getItem("theme");
-    if (saved === "dark" || saved === "light") {
-      setTheme(saved);
-      document.documentElement.setAttribute("data-theme", saved);
-      return;
-    }
+    if (saved === "dark" || saved === "light") return saved;
 
     const prefersLight =
       window.matchMedia?.("(prefers-color-scheme: light)")?.matches;
-    const initial = prefersLight ? "light" : "dark";
-    setTheme(initial);
-    document.documentElement.setAttribute("data-theme", initial);
-  }, []);
+    return prefersLight ? "light" : "dark";
+  };
+
+  const [theme, setTheme] = useState(getInitialTheme);
+
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", theme);
+    localStorage.setItem("theme", theme);
+  }, [theme]);
 
   const toggleTheme = () => {
-    const next = theme === "dark" ? "light" : "dark";
-    setTheme(next);
-    document.documentElement.setAttribute("data-theme", next);
-    localStorage.setItem("theme", next);
+    setTheme((t) => (t === "dark" ? "light" : "dark"));
   };
+
+  /* ================= PHONE MENU (click outside) ================= */
+  useEffect(() => {
+    const onDocDown = (e) => {
+      if (!phoneMenuOpen) return;
+      const wrap = phoneWrapRef.current;
+      if (wrap && !wrap.contains(e.target)) setPhoneMenuOpen(false);
+    };
+    document.addEventListener("mousedown", onDocDown);
+    document.addEventListener("touchstart", onDocDown);
+    return () => {
+      document.removeEventListener("mousedown", onDocDown);
+      document.removeEventListener("touchstart", onDocDown);
+    };
+  }, [phoneMenuOpen]);
 
   /* ================= ACTIONS ================= */
   const onWhatsAppChat = () => {
+    // 💬 fără locație => WhatsApp pe numărul unic
     if (!waPhone) {
-      window.location.href = `tel:${SITE?.phone ?? ""}`;
+      window.location.href = `tel:${SITE?.phone2 ?? SITE?.phone1 ?? ""}`;
       return;
     }
     openWhatsApp({ waPhone });
   };
 
   const onWhatsAppWithLocation = () => {
+    // 📍 cu locație => WhatsApp pe numărul unic
     if (!waPhone) {
-      window.location.href = `tel:${SITE?.phone ?? ""}`;
+      window.location.href = `tel:${SITE?.phone2 ?? SITE?.phone1 ?? ""}`;
       return;
     }
 
@@ -112,14 +134,73 @@ export default function HeaderClient() {
 
         {/* RIGHT */}
         <div className={styles.right}>
-          <a
-            className={styles.iconBtn}
-            href={`tel:${SITE.phone}`}
-            aria-label="Apelează"
-            title="Apelează"
+          {/* ✅ Telefon: la click arată ambele numere */}
+          <div
+            ref={phoneWrapRef}
+            style={{ position: "relative", display: "inline-block" }}
           >
-            📞
-          </a>
+            <button
+              type="button"
+              className={styles.iconBtn}
+              onClick={() => setPhoneMenuOpen((v) => !v)}
+              aria-label="Apelează (alege numărul)"
+              title="Apelează"
+              aria-expanded={phoneMenuOpen}
+              aria-haspopup="menu"
+            >
+              📞
+            </button>
+
+            {phoneMenuOpen && (
+              <div
+                role="menu"
+                aria-label="Alege numărul de telefon"
+                style={{
+                  position: "absolute",
+                  right: 0,
+                  top: "calc(100% + 8px)",
+                  minWidth: 180,
+                  padding: 8,
+                  borderRadius: 12,
+                  background: "var(--panel, #111)",
+                  border: "1px solid rgba(255,255,255,0.12)",
+                  boxShadow: "0 12px 30px rgba(0,0,0,0.35)",
+                  zIndex: 50,
+                }}
+              >
+                <a
+                  role="menuitem"
+                  href={`tel:${SITE.phone1}`}
+                  onClick={() => setPhoneMenuOpen(false)}
+                  style={{
+                    display: "block",
+                    padding: "10px 10px",
+                    borderRadius: 10,
+                    textDecoration: "none",
+                    color: "inherit",
+                  }}
+                >
+                  📞 {SITE.phone1}
+                </a>
+
+                <a
+                  role="menuitem"
+                  href={`tel:${SITE.phone2}`}
+                  onClick={() => setPhoneMenuOpen(false)}
+                  style={{
+                    display: "block",
+                    padding: "10px 10px",
+                    borderRadius: 10,
+                    textDecoration: "none",
+                    color: "inherit",
+                    marginTop: 4,
+                  }}
+                >
+                  📞 {SITE.phone2}
+                </a>
+              </div>
+            )}
+          </div>
 
           <button
             type="button"

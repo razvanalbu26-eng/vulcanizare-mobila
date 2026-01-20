@@ -13,9 +13,9 @@ import SectionReviews from "../components/Sections/SectionReviews.jsx";
 import SectionGallery from "../components/Sections/SectionGaleery"; // ajustează dacă ai alt nume
 
 export const metadata = defaultMetadata({
-  title: "Vulcanizare mobilă 24/7 – intervenție rapidă",
+  title: "Vulcanizare mobilă 24/7 A7 – Buzău, Râmnicu Sărat, Ploiești | La Răzvan",
   description:
-    "Ai făcut pană? Intervenim rapid cu vulcanizare mobilă. Sună sau trimite locația pe WhatsApp.",
+    "Vulcanizare mobilă non-stop pe Autostrada A7 și în județul Buzău. Intervenții rapide pentru autoturisme, camioane și TIR-uri.",
   path: "/",
 });
 
