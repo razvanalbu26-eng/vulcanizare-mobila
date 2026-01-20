@@ -1,0 +1,229 @@
+/* =========================
+   HEADER (uses global vars)
+========================= */
+
+.header{
+  position: sticky;
+  top: 0;
+  z-index: 50;
+
+  /* mai “glass” și compatibil light/dark */
+  background: color-mix(in srgb, var(--bg-main) 72%, transparent);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border-soft);
+
+  /* un shadow discret (light/dark) */
+  box-shadow: var(--shadow-soft, 0 10px 28px rgba(0,0,0,.18));
+}
+
+.inner{
+  max-width: 1200px;
+  margin: 0 auto;
+
+  padding: .55rem .75rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .75rem;
+}
+
+/* =========================
+   BRAND (LEFT)
+========================= */
+
+.brand{
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  min-width: 0;
+}
+
+.logo{
+  width: 30px;
+  height: 30px;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+
+  display: grid;
+  place-items: center;
+
+  background: var(--accent-soft);
+  border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+  color: var(--accent);
+  font-weight: 900;
+
+  line-height: 1;
+  font-size: 18px;
+}
+
+.brand > div{
+  min-width: 0;
+}
+
+/* “Vulcanizare Mobilă” — mai mic */
+.brandName{
+  font-size: .74rem;
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: .1px;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  color: var(--text-main);
+}
+
+/* Desktop: text complet din config */
+.brandSub{
+  margin-top: 2px;
+  font-size: .72rem;
+  color: var(--text-muted);
+  line-height: 1.1;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* =========================
+   ACTIONS (RIGHT)
+========================= */
+
+.right{
+  display: flex;
+  align-items: center;
+  gap: .3rem;
+}
+
+/* icon buttons (a + button) */
+.iconBtn{
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+
+  display: grid;
+  place-items: center;
+
+  background: transparent;
+  border: 1px solid transparent;
+
+  font-size: 1.02rem;
+  cursor: pointer;
+
+  text-decoration: none;
+  line-height: 1;
+  -webkit-tap-highlight-color: transparent;
+
+  transition: background-color .15s ease, border-color .15s ease, transform .05s ease;
+}
+
+.iconBtn:hover{
+  background: var(--bg-card);
+  border-color: var(--border-soft);
+}
+
+.iconBtn:active{ transform: scale(.96); }
+
+.iconBtn:focus-visible{
+  outline: 2px solid color-mix(in srgb, var(--accent) 45%, transparent);
+  outline-offset: 2px;
+}
+
+.iconBtn:disabled{
+  opacity: .55;
+  cursor: default;
+}
+
+/* burger button ☰ */
+.menuBtn{
+  width: 36px;
+  height: 34px;
+  border-radius: 10px;
+
+  display: grid;
+  place-items: center;
+
+  background: var(--bg-card);
+  border: 1px solid var(--border-soft);
+
+  font-size: 1.1rem;
+  cursor: pointer;
+
+  line-height: 1;
+  -webkit-tap-highlight-color: transparent;
+
+  transition: background-color .15s ease, border-color .15s ease, transform .05s ease;
+}
+
+.menuBtn:hover{
+  background: var(--bg-soft);
+  border-color: var(--border-strong);
+}
+
+.menuBtn:active{ transform: scale(.96); }
+
+.menuBtn:focus-visible{
+  outline: 2px solid color-mix(in srgb, var(--accent) 45%, transparent);
+  outline-offset: 2px;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 520px){
+  .inner{ padding: .5rem .6rem; gap: .6rem; }
+
+  .logo{ width: 28px; height: 28px; font-size: 16px; }
+
+  .brandName{ font-size: .70rem; }
+
+  /* variantă simplă fără hack: doar scurtăm vizual */
+  .brandSub{
+    margin-top: 0;
+    max-width: 22ch;          /* “A7 + zone limitrofe” încape */
+  }
+
+  .iconBtn{ width: 32px; height: 32px; border-radius: 9px; font-size: 1rem; }
+  .menuBtn{ width: 34px; height: 32px; border-radius: 9px; font-size: 1.05rem; }
+}
+
+/* =========================
+   DESKTOP – componente mai mari
+========================= */
+
+@media (min-width: 768px){
+  .inner{
+    padding: .75rem 1rem;
+    gap: 1rem;
+  }
+
+  .logo{
+    width: 36px;
+    height: 36px;
+    font-size: 20px;
+  }
+
+  .brandName{
+    font-size: .88rem;
+  }
+
+  .brandSub{
+    font-size: .78rem;
+  }
+
+  .iconBtn{
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    font-size: 1.15rem;
+  }
+
+  .menuBtn{
+    width: 44px;
+    height: 40px;
+    border-radius: 12px;
+    font-size: 1.25rem;
+  }
+}

@@ -1,0 +1,112 @@
+.wrap{
+  position: relative;
+  display: inline-flex;
+}
+
+/* doar dacă folosești trigger="burger" */
+.burger{
+  width: 36px;
+  height: 34px;
+  border-radius: 10px;
+
+  background: var(--bg-card);
+  border: 1px solid var(--border-soft);
+  cursor: pointer;
+
+  display: grid;
+  place-items: center;
+
+  -webkit-tap-highlight-color: transparent;
+  transition: transform .06s ease, border-color .15s ease, background-color .15s ease;
+}
+
+.burger:hover{
+  border-color: var(--border-strong);
+}
+
+.burger:active{
+  transform: scale(.98);
+}
+
+.burger:focus-visible{
+  outline: 2px solid color-mix(in srgb, var(--accent) 45%, transparent);
+  outline-offset: 2px;
+}
+
+.burger span{
+  display: block;
+  width: 16px;
+  height: 2px;
+  background: var(--text-main);
+  border-radius: 999px;
+  margin: 2px 0;
+}
+
+/* ✅ dropdown OPAC (nu mai e transparent) */
+.panel{
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+
+  min-width: 180px;
+  padding: .4rem;
+
+  /* ✅ opac + theme aware */
+  background: var(--bg-panel);
+  border: 1px solid var(--border-strong);
+  border-radius: 14px;
+
+  /* ❌ fără blur (evită „amestecul” cu fundalul) */
+  backdrop-filter: none;
+
+  /* ✅ separare puternică de fundal */
+  box-shadow:
+    var(--shadow-soft),
+    0 0 0 1px rgba(255,255,255,.04);
+
+  z-index: 999;
+
+  transform-origin: top right;
+  animation: menuIn .12s ease-out both;
+}
+
+@keyframes menuIn{
+  from{ opacity: 0; transform: translateY(-6px) scale(.98); }
+  to{ opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.item{
+  width: 100%;
+  text-align: left;
+
+  padding: .6rem .65rem;
+  border-radius: 12px;
+
+  background: transparent;
+  border: 0;
+  color: var(--text-main);
+
+  cursor: pointer;
+  font-size: .95rem;
+
+  -webkit-tap-highlight-color: transparent;
+  transition: background-color .15s ease, transform .06s ease;
+}
+
+.item:hover{
+  background: var(--bg-soft);
+}
+
+.item:active{
+  transform: scale(.99);
+}
+
+.item:focus-visible{
+  outline: 2px solid color-mix(in srgb, var(--accent) 40%, transparent);
+  outline-offset: 2px;
+}
+
+@media (max-width: 520px){
+  .panel{ min-width: 165px; }
+  .item{ font-size: .92rem; padding: .55rem .6rem; }
+}

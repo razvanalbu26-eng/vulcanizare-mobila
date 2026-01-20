@@ -1,0 +1,532 @@
+/* =========================
+   WRAP + HEADER
+========================= */
+.wrap{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
+.head{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+
+.h2{
+  margin:0;
+  font-size:22px;
+  color: var(--text-main);
+}
+
+.p{
+  margin:0;
+  color: var(--text-muted);
+  line-height:1.45;
+}
+
+/* =========================
+   GRID
+========================= */
+.grid{
+  display:grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap:10px;
+}
+
+/* =========================
+   CARD
+========================= */
+.card{
+  border:1px solid var(--border-soft);
+  background: var(--bg-card);
+  border-radius:16px;
+  padding:12px;
+
+  box-shadow: var(--shadow-soft, 0 14px 38px rgba(0,0,0,.22));
+}
+
+.title{
+  font-weight:800;
+  color: var(--text-main);
+}
+
+.desc{
+  margin-top:6px;
+  color: var(--text-muted);
+  font-size:14px;
+  line-height:1.4;
+}
+
+/* =========================
+   CARD WIDE
+========================= */
+.cardWide{
+  border:1px solid var(--border-soft);
+  background: var(--bg-card);
+  border-radius:16px;
+  padding:12px;
+
+  box-shadow: var(--shadow-soft, 0 14px 38px rgba(0,0,0,.22));
+}
+
+.row{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap:10px;
+}
+
+/* =========================
+   LINKS
+========================= */
+.linkStrong{
+  color: var(--text-main);
+  font-weight: 950;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* =========================
+   FACTS
+========================= */
+.facts{
+  margin-top: 14px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.fact{
+  border-radius: 14px;
+  padding: 12px;
+  border: 1px solid var(--border-soft);
+  background: var(--bg-soft);
+  min-width: 0;
+}
+
+.factK{
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+
+.factV{
+  font-size: 13px;
+  color: var(--text-main);
+  line-height: 1.35;
+}
+
+/* =========================
+   HOW / STEPS
+========================= */
+.how{
+  margin-top: 12px;
+  border-radius: 14px;
+  padding: 12px;
+  border: 1px solid var(--border-soft);
+  background: var(--bg-card);
+}
+
+.howTitle{
+  font-weight: 950;
+  font-size: 13.5px;
+  color: var(--text-main);
+  margin-bottom: 8px;
+}
+
+.howList{
+  margin: 0;
+  padding-left: 18px;
+  color: var(--text-muted);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+/* =========================
+   CTA + NOTE
+========================= */
+.ctaArea{
+  margin-top: 12px;
+}
+
+.smallNote{
+  margin-top: 8px;
+  font-size: 12.5px;
+  color: var(--text-muted);
+  line-height: 1.35;
+}
+
+/* =========================
+   REVIEWS
+========================= */
+.reviewsTop{
+  display:flex;
+  align-items:flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+
+.reviewsScore{
+  display:flex;
+  align-items:center;
+  gap: 10px;
+}
+
+.reviewsRating{
+  font-size: 26px;
+  font-weight: 950;
+  letter-spacing: -0.3px;
+  color: var(--text-main);
+}
+
+.reviewsStars{
+  font-size: 14px;
+  opacity: .95;
+}
+
+.reviewsMeta{
+  margin-top: 6px;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.reviewsHint{
+  font-size: 13px;
+  color: var(--text-muted);
+  padding: 10px 12px;
+  border-radius: 14px;
+  border: 1px solid var(--border-soft);
+  background: var(--bg-soft);
+}
+
+.reviewsGrid{
+  display:grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.reviewCard{
+  border-radius: 16px;
+  border: 1px solid var(--border-soft);
+  background: var(--bg-card);
+  padding: 12px;
+  min-width: 0;
+
+  box-shadow: var(--shadow-soft, 0 14px 38px rgba(0,0,0,.22));
+}
+
+.reviewHead{
+  display:flex;
+  align-items:flex-start;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.reviewName{
+  font-weight: 900;
+  font-size: 13.5px;
+  color: var(--text-main);
+}
+
+.reviewWhere{
+  font-weight: 800;
+  color: var(--text-muted);
+}
+
+.reviewStars{
+  font-size: 12px;
+  opacity: .9;
+  white-space: nowrap;
+}
+
+.reviewText{
+  margin-top: 8px;
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--text-main);
+}
+
+.reviewDate{
+  margin-top: 10px;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* =========================
+   GALLERY
+========================= */
+.galleryGrid{
+  display:grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.galleryItem{
+  display:block;
+  border-radius: 16px;
+  overflow:hidden;
+  border: 1px solid var(--border-soft);
+  background: var(--bg-card);
+  text-decoration:none;
+  color: inherit;
+
+  box-shadow: var(--shadow-soft, 0 14px 38px rgba(0,0,0,.22));
+}
+
+.galleryImg{
+  width: 100%;
+  height: 170px;
+  object-fit: cover;
+  display:block;
+}
+
+.galleryCaption{
+  padding: 10px 12px;
+  font-size: 12.5px;
+  color: var(--text-muted);
+  line-height: 1.35;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width: 760px){
+  .grid{ grid-template-columns: 1fr; }
+  .row{ grid-template-columns: 1fr; }
+}
+
+@media (max-width: 920px){
+  .reviewsGrid{ grid-template-columns: 1fr; }
+  .galleryGrid{ grid-template-columns: 1fr 1fr; }
+  .galleryImg{ height: 150px; }
+}
+
+@media (max-width: 720px){
+  .facts{
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .fact{
+    padding: 11px 12px;
+  }
+
+  .how{
+    padding: 11px 12px;
+  }
+
+  .howList{
+    font-size: 12.75px;
+  }
+
+  .smallNote{
+    font-size: 12.25px;
+  }
+}
+
+@media (max-width: 520px){
+  .galleryGrid{ grid-template-columns: 1fr; }
+  .galleryImg{ height: 180px; }
+}
+/* =========================
+   CONTACT – MOBILE COMPACT
+========================= */
+
+@media (max-width: 720px){
+  .wrap{ gap: 10px; }
+
+  .head{ gap: 5px; }
+  .h2{ font-size: 18px; }
+  .p{ font-size: 13px; line-height: 1.42; }
+
+  .cardWide{
+    padding: 10px;
+    border-radius: 14px;
+  }
+
+  .row{ gap: 8px; }
+
+  .title{
+    font-size: 13px;
+    font-weight: 900;
+  }
+
+  .desc{
+    margin-top: 4px;
+    font-size: 13px;
+    line-height: 1.35;
+  }
+
+  .linkStrong{
+    text-underline-offset: 2px;
+  }
+
+  /* Facts – mai compacte */
+  .facts{
+    margin-top: 10px;
+    gap: 8px;
+  }
+
+  .fact{
+    padding: 10px;
+    border-radius: 13px;
+  }
+
+  .factK{
+    font-size: 11.5px;
+    margin-bottom: 3px;
+  }
+
+  .factV{
+    font-size: 12.5px;
+    line-height: 1.3;
+  }
+
+  /* How-to – mai compact */
+  .how{
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 13px;
+  }
+
+  .howTitle{
+    font-size: 13px;
+    margin-bottom: 6px;
+  }
+
+  .howList{
+    padding-left: 16px;
+    font-size: 12.5px;
+    line-height: 1.4;
+  }
+
+  .howList li{ margin: 4px 0; }
+
+  /* CTA */
+  .ctaArea{ margin-top: 10px; }
+
+  .smallNote{
+    margin-top: 6px;
+    font-size: 12px;
+    line-height: 1.3;
+  }
+}
+
+/* Extra small phones */
+@media (max-width: 420px){
+  .h2{ font-size: 17px; }
+  .p{ font-size: 12.5px; }
+
+  .cardWide{ padding: 9px; border-radius: 13px; }
+
+  .fact{ padding: 9px; border-radius: 12px; }
+  .factV{ font-size: 12.25px; }
+
+  .how{ padding: 9px; border-radius: 12px; }
+  .howTitle{ font-size: 12.75px; }
+
+  .smallNote{ font-size: 11.75px; }
+}
+/* =========================
+   GALLERY (cards + video)
+========================= */
+
+/* Desktop/tablet: grid normal */
+.galleryRail{
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+/* Card */
+.galleryItem{
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid var(--border-soft);
+  background: var(--bg-card);
+  box-shadow: var(--shadow-soft, 0 14px 38px rgba(0,0,0,.22));
+  min-width: 0;
+  margin: 0; /* figure reset */
+}
+
+/* Wrapper cu ratio fix (poze + video la fel) */
+.mediaWrap{
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  background: rgba(0,0,0,.18);
+  overflow: hidden;
+}
+
+/* Media */
+.galleryMedia{
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+/* Video polish */
+.galleryItem video.galleryMedia{
+  background: #000;
+  outline: none;
+}
+
+/* Caption */
+.galleryCaption{
+  padding: 10px 12px;
+  font-size: 12.5px;
+  color: var(--text-muted);
+  line-height: 1.35;
+  border-top: 1px solid var(--border-soft);
+}
+
+/* =========================
+   MOBILE: swipe / glisare
+========================= */
+
+@media (max-width: 920px){
+  .galleryRail{
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 720px){
+  /* devine carousel orizontal */
+  .galleryRail{
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 82%;
+    gap: 10px;
+
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+
+    padding-bottom: 6px;
+  }
+
+  .galleryItem{
+    scroll-snap-align: start;
+  }
+
+  .mediaWrap{
+    aspect-ratio: 16 / 11; /* puțin mai înalt pe mobil */
+  }
+
+  /* scroll bar discret */
+  .galleryRail::-webkit-scrollbar{ height: 8px; }
+  .galleryRail::-webkit-scrollbar-thumb{
+    background: var(--border-strong);
+    border-radius: 999px;
+  }
+  .galleryRail::-webkit-scrollbar-track{ background: transparent; }
+}
+
+@media (max-width: 420px){
+  .galleryRail{ grid-auto-columns: 90%; }
+  .galleryCaption{ font-size: 12px; padding: 9px 10px; }
+}

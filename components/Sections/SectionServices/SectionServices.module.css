@@ -1,0 +1,360 @@
+/* =========================
+   SECTION + CONTAINER
+========================= */
+.section{
+  padding: 18px 14px 22px;
+}
+
+.container{
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* =========================
+   HEADER
+========================= */
+.head{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  margin-bottom:16px;
+}
+
+.h2{
+  margin:0;
+  font-size:22px;
+  letter-spacing:-0.3px;
+  color: var(--text-main);
+}
+
+.p{
+  margin:0;
+  color: var(--text-muted);
+  font-size:14px;
+  line-height:1.55;
+  max-width:70ch;
+}
+
+/* =========================
+   GRID
+========================= */
+.grid{
+  display:grid;
+  grid-template-columns: 1fr;
+  gap:14px;
+
+  /* FIX: permite shrink corect */
+  min-width: 0;
+}
+
+/* =========================
+   CARD
+========================= */
+.card{
+  border-radius:18px;
+  padding:16px;
+
+  border:1px solid var(--border-soft);
+  background: var(--bg-card);
+
+  /* ✅ shadow theme-aware (light folosește --shadow-soft din globals) */
+  box-shadow: var(--shadow-soft, 0 16px 46px rgba(0,0,0,0.22));
+
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+
+  /* FIX: nu mai “împinge” grid-ul */
+  min-width: 0;
+
+  transition: transform .08s ease, border-color .15s ease, background-color .15s ease;
+}
+
+.card:hover{
+  border-color: var(--border-strong);
+  transform: translateY(-1px);
+}
+
+/* =========================
+   CARD TOP
+========================= */
+.cardTop{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  min-width: 0;
+}
+
+.titleRow{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  min-width: 0;
+}
+
+.title{
+  margin:0;
+  font-size:16px;
+  letter-spacing:-0.2px;
+  color: var(--text-main);
+
+  /* FIX: titluri lungi */
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* kicker (badge) */
+.kicker{
+  font-size:12px;
+  padding:6px 10px;
+  border-radius:999px;
+
+  border:1px solid var(--border-strong);
+  background: var(--accent-soft);
+  color: var(--text-main);
+
+  white-space:nowrap;
+  font-weight: 800;
+  flex: 0 0 auto;
+}
+
+.desc{
+  margin:0;
+  font-size:13px;
+  line-height:1.55;
+  color: var(--text-muted);
+}
+
+/* =========================
+   CHIPS
+========================= */
+.chips{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+
+  /* FIX */
+  min-width: 0;
+}
+
+.chip{
+  font-size:12px;
+  padding:6px 10px;
+  border-radius:999px;
+  border:1px solid var(--border-soft);
+
+  background: var(--bg-soft);
+  color: var(--text-main);
+
+  /* FIX: chips lungi nu mai “sparg” */
+  max-width: 100%;
+  white-space: normal;
+}
+
+/* =========================
+   INFO BOX
+========================= */
+.infoBox{
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  padding:12px;
+  border-radius:14px;
+
+  border:1px solid var(--border-soft);
+  background: var(--bg-soft);
+
+  /* FIX */
+  min-width: 0;
+}
+
+.infoIcon{
+  width:18px;
+  height:18px;
+  border-radius:999px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+
+  font-size:12px;
+  font-weight:900;
+
+  /* ✅ folosește variabila globală */
+  background: var(--info);
+  color: rgba(0,0,0,0.88);
+
+  flex:0 0 auto;
+  margin-top:1px;
+}
+
+.infoText{
+  font-size:12px;
+  line-height:1.5;
+  color: var(--text-muted);
+
+  /* FIX */
+  min-width: 0;
+}
+
+/* =========================
+   ACTIONS ROW
+========================= */
+.actionsRow{
+  display:flex;
+  gap:10px;
+  margin-top:6px;
+
+  /* FIX: permite wrap + shrink */
+  min-width: 0;
+  flex-wrap: wrap;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+.call,
+.wa,
+.waGhost{
+  /* FIX: pot să se micșoreze în flex */
+  flex: 1 1 0;
+  min-width: 0;
+
+  border-radius:14px;
+  padding:12px 10px;
+
+  border:1px solid var(--border-soft);
+  font-weight:900;
+  font-size:13px;
+
+  cursor:pointer;
+  text-decoration:none;
+
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+
+  /* păstrăm pe o linie, dar fără să “spargă” */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  user-select:none;
+  -webkit-tap-highlight-color:transparent;
+
+  transition: transform .06s ease, background-color .15s ease, border-color .15s ease;
+}
+
+.call:active,
+.wa:active,
+.waGhost:active{
+  transform: scale(.985);
+}
+
+/* Call */
+.call{
+  background: color-mix(in srgb, var(--info) 14%, transparent);
+  border-color: color-mix(in srgb, var(--info) 28%, transparent);
+  color: var(--text-main);
+}
+
+/* WhatsApp GPS */
+.wa{
+  background: var(--accent-soft);
+  border-color: color-mix(in srgb, var(--accent) 45%, transparent);
+  color: var(--text-main);
+}
+
+/* WhatsApp fără GPS */
+.waGhost{
+  background: var(--bg-soft);
+  color: var(--text-main);
+}
+
+/* Hover */
+.call:hover{ border-color: color-mix(in srgb, var(--info) 45%, transparent); }
+.wa:hover{ border-color: color-mix(in srgb, var(--accent) 62%, transparent); }
+.waGhost:hover{ border-color: var(--border-strong); }
+
+/* Focus (accessibility) */
+.call:focus-visible,
+.wa:focus-visible,
+.waGhost:focus-visible{
+  outline: 2px solid color-mix(in srgb, var(--accent) 45%, transparent);
+  outline-offset: 2px;
+}
+
+/* Disabled GPS */
+.wa:disabled{
+  opacity:.65;
+  cursor:not-allowed;
+}
+
+/* =========================
+   FOOT NOTE
+========================= */
+.footerNote{
+  margin-top:14px;
+  display:flex;
+  gap:10px;
+  align-items:center;
+  color: var(--text-muted);
+  font-size:12px;
+}
+
+.noteDot{
+  width:10px;
+  height:10px;
+  border-radius:999px;
+  background: var(--accent);
+  box-shadow:0 0 0 6px var(--accent-soft);
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (min-width:720px){
+  .section{ padding:26px 18px 34px; }
+  .h2{ font-size:26px; }
+  .p{ font-size:15px; }
+  .grid{ grid-template-columns:repeat(2,1fr); gap:16px; }
+  .title{ font-size:18px; }
+  .desc{ font-size:14px; }
+}
+
+@media (min-width:1024px){
+  .grid{ grid-template-columns:repeat(4,1fr); }
+}
+
+/* Extra safe: ecrane foarte mici */
+@media (max-width:360px){
+  .actionsRow{
+    flex-direction:column;
+  }
+}
+
+.quickCall{
+  align-self: flex-start;
+  margin-top: 6px;
+
+  font-size: 13px;
+  font-weight: 800;
+  text-decoration: none;
+
+  color: var(--info);
+
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  opacity: .9;
+  transition: opacity .15s ease, transform .08s ease;
+}
+
+.quickCall:hover{
+  opacity: 1;
+  transform: translateX(2px);
+}

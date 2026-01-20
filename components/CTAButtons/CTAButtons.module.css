@@ -1,0 +1,187 @@
+.wrap{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  margin-top:14px;
+}
+
+/* =========================
+   CTA PRINCIPAL
+========================= */
+.primary{
+  /* ✅ accent din theme */
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--accent) 92%, #ffffff 8%),
+    color-mix(in srgb, var(--accent) 72%, #000000 28%)
+  );
+
+  /* text închis pe buton verde */
+  color: rgba(0,0,0,0.82);
+
+  border-radius:18px;
+  padding:16px;
+
+  font-weight:900;
+  font-size:18px;
+  text-decoration:none;
+
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+
+  border:1px solid color-mix(in srgb, var(--accent) 40%, transparent);
+
+  box-shadow:
+    0 10px 30px color-mix(in srgb, var(--accent) 28%, transparent),
+    inset 0 0 0 1px rgba(255,255,255,.16);
+
+  transition: transform .08s ease, box-shadow .18s ease, filter .18s ease;
+}
+
+/* text mic sub titlu */
+.sub{
+  font-size:12px;
+  font-weight:700;
+  opacity:.86;
+}
+
+/* =========================
+   WHATSAPP CU GPS
+========================= */
+.secondary{
+  background: var(--accent-soft);
+  border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
+  color: var(--text-main);
+
+  border-radius:16px;
+  padding:14px;
+
+  font-weight:850;
+  cursor:pointer;
+  text-decoration:none;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  transition: transform .08s ease, border-color .15s ease, background-color .15s ease;
+}
+
+/* =========================
+   FALLBACK (ghost)
+========================= */
+.ghost{
+  background: var(--bg-soft);
+  border: 1px solid var(--border-soft);
+  color: var(--text-main);
+
+  border-radius:14px;
+  padding:12px;
+
+  font-weight:800;
+  cursor:pointer;
+  text-decoration:none;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  transition: transform .08s ease, border-color .15s ease, background-color .15s ease;
+}
+
+/* =========================
+   HOVER / ACTIVE
+========================= */
+.primary:hover{
+  transform: translateY(-1px);
+  box-shadow:
+    0 14px 36px color-mix(in srgb, var(--accent) 34%, transparent),
+    inset 0 0 0 1px rgba(255,255,255,.22);
+  filter: saturate(1.05);
+}
+
+.secondary:hover{
+  border-color: color-mix(in srgb, var(--accent) 62%, transparent);
+  background: color-mix(in srgb, var(--accent-soft) 80%, transparent);
+}
+
+.ghost:hover{
+  border-color: var(--border-strong);
+  background: color-mix(in srgb, var(--bg-soft) 86%, transparent);
+}
+
+.primary:active,
+.secondary:active,
+.ghost:active{
+  transform: scale(.985);
+}
+
+/* =========================
+   FOCUS (a11y)
+========================= */
+.primary:focus-visible,
+.secondary:focus-visible,
+.ghost:focus-visible{
+  outline: 2px solid color-mix(in srgb, var(--accent) 45%, transparent);
+  outline-offset: 2px;
+}
+
+/* =========================
+   PULSE (desktop only)
+========================= */
+@media (min-width: 768px){
+  .wrap{ flex-direction:row; }
+
+  .primary{ flex:1.3; }
+  .secondary{ flex:1; }
+
+  .primary{
+    animation: pulse 2.2s infinite;
+  }
+}
+
+@keyframes pulse{
+  0%{ box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 40%, transparent); }
+  70%{ box-shadow: 0 0 0 16px color-mix(in srgb, var(--accent) 0%, transparent); }
+  100%{ box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 0%, transparent); }
+}
+
+/* respectă user preference */
+@media (prefers-reduced-motion: reduce){
+  .primary{ animation: none !important; }
+}
+
+/* =========================
+   MOBILE: mai compact
+========================= */
+@media (max-width: 420px){
+  .wrap{
+    gap: 8px;
+    margin-top: 10px;
+  }
+
+  .primary{
+    border-radius: 14px;
+    padding: 12px;
+    font-size: 16px;
+    animation: none; /* mai calm pe mobile */
+  }
+
+  .sub{ font-size: 11px; }
+
+  .secondary{
+    border-radius: 14px;
+    padding: 11px 12px;
+    font-weight: 850;
+    font-size: 14px;
+  }
+
+  .ghost{
+    border-radius: 12px;
+    padding: 10px 12px;
+    font-weight: 800;
+    font-size: 13px;
+  }
+}

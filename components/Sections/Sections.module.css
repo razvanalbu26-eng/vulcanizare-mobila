@@ -1,0 +1,162 @@
+.page{
+  min-height: 100vh;
+}
+
+/* =========================
+   HEADER
+========================= */
+.header{
+  position: sticky;
+  top: 0;
+  z-index: 50;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 14px 16px;
+
+  border-bottom: 1px solid var(--border-soft);
+  background: color-mix(in srgb, var(--bg-main) 72%, transparent);
+  backdrop-filter: blur(10px);
+}
+
+.brand{
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.logo{
+  width: 34px;
+  height: 34px;
+  border-radius: 12px;
+
+  display: grid;
+  place-items: center;
+
+  background: color-mix(in srgb, var(--info) 14%, transparent);
+  border: 1px solid var(--border-soft);
+  color: var(--accent);
+}
+
+.brandName{
+  font-weight: 800;
+  letter-spacing: .2px;
+  color: var(--text-main);
+}
+
+.brandSub{
+  color: var(--text-muted);
+  font-size: 12px;
+  margin-top: 2px;
+}
+
+/* =========================
+   MAIN
+========================= */
+.main{
+  max-width: 1050px;
+  margin: 0 auto;
+  padding: 18px 16px 42px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* wrapper section on homepage (if you use it) */
+.section{
+  background: var(--bg-card);
+  border: 1px solid var(--border-soft);
+  border-radius: 18px;
+  padding: 18px;
+
+  box-shadow: var(--shadow-soft, 0 20px 45px rgba(0,0,0,.25));
+}
+
+/* =========================
+   FOOTER
+========================= */
+.footer{
+  padding: 18px 0 24px;
+  border-top: 1px solid var(--border-soft);
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+.footerInner{
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 16px;
+
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.footerLeft{
+  display: grid;
+  gap: 6px;
+}
+
+.footerMeta{
+  font-size: 12px;
+  opacity: .9;
+}
+
+.footerRight{
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.footerLink{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 10px 12px;
+  border-radius: 12px;
+
+  border: 1px solid var(--border-soft);
+  background: var(--bg-soft);
+  color: var(--text-main);
+
+  text-decoration: none;
+  font-weight: 900;
+  font-size: 13px;
+
+  -webkit-tap-highlight-color: transparent;
+  transition: transform .06s ease, border-color .15s ease, background-color .15s ease;
+}
+
+.footerLink:hover{
+  border-color: var(--border-strong);
+}
+
+.footerLink:active{
+  transform: scale(.98);
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+/* Mobile: butoane full width */
+@media (max-width: 720px){
+  .footerInner{
+    gap: 10px;
+  }
+  .footerRight{
+    width: 100%;
+    justify-content: stretch;
+  }
+  .footerLink{
+    width: 100%;
+  }
+}
