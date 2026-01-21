@@ -98,43 +98,47 @@ export default function HeaderClient() {
     window.location.href = buildWhatsAppUrl({ waPhone });
   };
 
-  // 📍 WhatsApp cu locație (FIX popup blocking)
-  const onWhatsAppWithLocation = () => {
-    if (!waPhone) {
-      window.location.href = `tel:${SITE?.phone2 ?? SITE?.phone1 ?? ""}`;
-      return;
-    }
+const onWhatsAppWithLocation = () => {
+  if (!waPhone) {
+    window.location.href = `tel:${SITE?.phone2 ?? SITE?.phone1 ?? ""}`;
+    return;
+  }
 
-    // ✅ deschidere SINCRONĂ (altfel browserul blochează)
-    const popup = window.open("about:blank", "_blank", "noopener,noreferrer");
+  // opțional: o confirmare “a ta” înainte să apară prompt-ul browserului
+  const ok = window.confirm("Vrei să trimiți locația ta pe WhatsApp?");
+  if (!ok) {
+    // dacă nu vrea locație, deschidem WhatsApp fără locație
+    window.location.href = buildWhatsAppUrl({ waPhone });
+    return;
+  }
 
-    const navigate = (url) => {
-      if (!url) return;
-      if (popup) popup.location.href = url;
-      else window.location.href = url;
-    };
+  if (!navigator.geolocation) {
+    window.location.href = buildWhatsAppUrl({ waPhone });
+    return;
+  }
 
-    if (!navigator.geolocation) {
-      navigate(buildWhatsAppUrl({ waPhone }));
-      return;
-    }
+  if (gpsLoading) return;
+  setGpsLoading(true);
 
-    if (gpsLoading) return;
-    setGpsLoading(true);
+  navigator.geolocation.getCurrentPosition(
+    (pos) => {
+      setGpsLoading(false);
+      const { latitude, longitude } = pos.coords;
 
-    navigator.geolocation.getCurrentPosition(
-      (pos) => {
-        setGpsLoading(false);
-        const { latitude, longitude } = pos.coords;
-        navigate(buildWhatsAppUrl({ waPhone, lat: latitude, lng: longitude }));
-      },
-      () => {
-        setGpsLoading(false);
-        navigate(buildWhatsAppUrl({ waPhone }));
-      },
-      { enableHighAccuracy: true, timeout: 8000, maximumAge: 30000 }
-    );
-  };
+      // ✅ fără popup, doar redirect în același tab
+      window.location.href = buildWhatsAppUrl({
+        waPhone,
+        lat: latitude,
+        lng: longitude,
+      });
+    },
+    () => {
+      setGpsLoading(false);
+      window.location.href = buildWhatsAppUrl({ waPhone });
+    },
+    { enableHighAccuracy: true, timeout: 8000, maximumAge: 30000 }
+  );
+};
 
   const onMenu = () => setMenuOpen((v) => !v);
 
