@@ -401,51 +401,73 @@ html[data-theme="light"] .locationLink{
 /* heroArt să nu fie prea agresiv pe alb */
 html[data-theme="light"] .heroArt{
   opacity: 0.55;
-}
+}/* =========================
+   OFFER BANNER (desktop + mobile)
+   Pentru JSX-ul tău:
+   .offerBanner / .offerIcon / .offerText / .offerTitle / .offerSub
+   .wordAuto / .wordTruck / .wordNew / .wordSh / .offerChip
+   ========================= */
+
+/* container */
 .offerBanner{
   margin-top: 14px;
   padding: 12px 12px;
   border-radius: 16px;
 
-  display:flex;
-  align-items:center;
+  display: flex;
+  align-items: center;
   gap: 12px;
 
-  border: 1px solid color-mix(in srgb, var(--accent) 28%, var(--border-soft));
+  /* look "premium" pe ambele teme */
+  border: 1px solid color-mix(in srgb, var(--accent) 26%, var(--border-soft));
   background:
-    radial-gradient(900px 120px at 15% 0%, color-mix(in srgb, var(--accent) 22%, transparent), transparent 60%),
+    radial-gradient(900px 140px at 12% 0%,
+      color-mix(in srgb, var(--accent) 18%, transparent),
+      transparent 62%
+    ),
     var(--bg-soft);
 
   box-shadow: var(--shadow-soft);
+  overflow: visible; /* ✅ ca să poată ieși cuvintele când pulsează */
 }
 
+/* icon */
 .offerIcon{
   width: 42px;
   height: 42px;
   border-radius: 14px;
-  display:grid;
-  place-items:center;
 
-  background: color-mix(in srgb, var(--accent) 18%, var(--bg-card));
-  border: 1px solid color-mix(in srgb, var(--accent) 22%, var(--border-soft));
+  display: grid;
+  place-items: center;
   flex: 0 0 auto;
+
+  background: color-mix(in srgb, var(--accent) 16%, var(--bg-card));
+  border: 1px solid color-mix(in srgb, var(--accent) 22%, var(--border-soft));
 }
 
-.offerText{ flex:1; min-width: 0; }
+/* text wrap */
+.offerText{
+  flex: 1;
+  min-width: 0;
+  overflow: visible;
+}
 
+/* title + sub */
 .offerTitle{
   font-weight: 950;
   color: var(--text-main);
   line-height: 1.2;
+  font-size: 15px;
 }
 
 .offerSub{
-  margin-top: 3px;
-  font-size: 13px;
+  margin-top: 4px;
   color: var(--text-muted);
   line-height: 1.35;
+  font-size: 13px;
 }
 
+/* chip "NOU" */
 .offerChip{
   flex: 0 0 auto;
   padding: 8px 10px;
@@ -459,11 +481,8 @@ html[data-theme="light"] .heroArt{
   border: 1px solid color-mix(in srgb, var(--accent) 30%, var(--border-soft));
   color: var(--text-main);
 }
-/* permite depășirea */
-.offerBanner,
-.offerText{
-  overflow: visible;
-}
+
+/* ============ PULS (fără chenar) ============ */
 /* toate cuvintele care pulsează */
 .wordAuto,
 .wordTruck,
@@ -471,7 +490,7 @@ html[data-theme="light"] .heroArt{
 .wordSh{
   position: relative;
   display: inline-block;
-  z-index: 20;
+  z-index: 20;            /* peste rest */
   font-weight: 950;
   will-change: transform, filter, text-shadow;
 }
@@ -487,7 +506,7 @@ html[data-theme="light"] .heroArt{
   color: var(--info);
 }
 
-/* animație FĂRĂ chenar */
+/* desktop: "wow" */
 @keyframes wordPulseBig {
   0%{
     transform: scale(1);
@@ -495,11 +514,11 @@ html[data-theme="light"] .heroArt{
     text-shadow: none;
   }
   45%{
-    transform: scale(1.7); /* 🔥 mare */
-    filter: saturate(1.4);
+    transform: scale(1.7);
+    filter: saturate(1.35);
     text-shadow:
       0 0 18px color-mix(in srgb, currentColor 35%, transparent),
-      0 0 40px color-mix(in srgb, currentColor 25%, transparent);
+      0 0 44px color-mix(in srgb, currentColor 25%, transparent);
   }
   100%{
     transform: scale(1);
@@ -508,32 +527,11 @@ html[data-theme="light"] .heroArt{
   }
 }
 
-/* secvență */
-.wordAuto{
-  animation: wordPulseBig 1.8s ease-in-out infinite;
-}
-
-.wordTruck{
-  animation: wordPulseBig 1.8s ease-in-out infinite;
-  animation-delay: .9s;
-}
-
-.wordNew{
-  animation: wordPulseBig 1.8s ease-in-out infinite;
-  animation-delay: 1.8s;
-}
-
-.wordSh{
-  animation: wordPulseBig 1.8s ease-in-out infinite;
-  animation-delay: 2.7s;
-}
-
-/* mobile – mai domol */
-@media (max-width: 560px){
-  @keyframes wordPulseBig {
-    45%{ transform: scale(1.35); }
-  }
-}
+/* secvență (citești în ordinea dorită) */
+.wordAuto{  animation: wordPulseBig 1.8s ease-in-out infinite; }
+.wordTruck{ animation: wordPulseBig 1.8s ease-in-out infinite; animation-delay: .9s; }
+.wordNew{   animation: wordPulseBig 1.8s ease-in-out infinite; animation-delay: 1.8s; }
+.wordSh{    animation: wordPulseBig 1.8s ease-in-out infinite; animation-delay: 2.7s; }
 
 /* accesibilitate */
 @media (prefers-reduced-motion: reduce){
@@ -542,5 +540,86 @@ html[data-theme="light"] .heroArt{
   .wordNew,
   .wordSh{
     animation: none;
+  }
+}
+
+/* =========================
+   MOBILE (<= 560px)
+   - puls mai mic (arata curat)
+   - chip se mută sus-dreapta
+   - spacing / font mai compacte
+   ========================= */
+@media (max-width: 560px){
+  .offerBanner{
+    padding: 12px;
+    gap: 10px;
+    align-items: flex-start;
+  }
+
+  .offerIcon{
+    width: 38px;
+    height: 38px;
+    border-radius: 13px;
+    margin-top: 1px;
+  }
+
+  .offerTitle{
+    font-size: 14px;
+    line-height: 1.22;
+  }
+
+  .offerSub{
+    font-size: 12.5px;
+    line-height: 1.35;
+  }
+
+  .offerChip{
+    align-self: flex-start;
+    padding: 7px 9px;
+    font-size: 11.5px;
+  }
+
+  /* puls mai safe pe mobil */
+  @keyframes wordPulseBig {
+    0%{
+      transform: scale(1);
+      filter: saturate(1);
+      text-shadow: none;
+    }
+    45%{
+      transform: scale(1.22);
+      filter: saturate(1.25);
+      text-shadow:
+        0 0 12px color-mix(in srgb, currentColor 34%, transparent),
+        0 0 26px color-mix(in srgb, currentColor 22%, transparent);
+    }
+    100%{
+      transform: scale(1);
+      filter: saturate(1);
+      text-shadow: none;
+    }
+  }
+
+  /* reduce “saltul” vizual când se mărește */
+  .wordAuto,
+  .wordTruck,
+  .wordNew,
+  .wordSh{
+    transform-origin: left center;
+  }
+}
+
+/* EXTRA: telefoane foarte mici (<= 420px) */
+@media (max-width: 420px){
+  .offerBanner{ padding: 11px; }
+  .offerTitle{ font-size: 13.5px; }
+  .offerSub{ font-size: 12.25px; }
+}
+/* =========================
+   MOBILE – fără icon anvelopă
+   ========================= */
+@media (max-width: 560px){
+  .offerIcon{
+    display: none;
   }
 }
