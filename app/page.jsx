@@ -11,11 +11,11 @@ import SectionContact from "../components/Sections/SectionContact.jsx";
 import SectionAssist from "../components/Sections/SectionAssist.jsx";
 import SectionReviews from "../components/Sections/SectionReviews.jsx";
 import SectionGallery from "../components/Sections/SectionGaleery"; // ajustează dacă ai alt nume
-
 export const metadata = defaultMetadata({
-  title: "Vulcanizare mobilă 24/7 A7 – Buzău, Râmnicu Sărat, Ploiești | La Răzvan",
+  title:
+    "Vulcanizare mobilă 24/7 A7 – Anvelope noi & SH | Autoturisme și Camioane – La Răzvan",
   description:
-    "Vulcanizare mobilă non-stop pe Autostrada A7 și în județul Buzău. Intervenții rapide pentru autoturisme, camioane și TIR-uri.",
+    "Vulcanizare mobilă non-stop pe Autostrada A7 și în județul Buzău. Înlocuire anvelope la fața locului (noi și SH) pentru autoturisme, camioane și TIR-uri. Intervenții rapide.",
   path: "/",
 });
 
