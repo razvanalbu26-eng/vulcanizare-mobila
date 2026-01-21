@@ -22,10 +22,44 @@ function buildWhatsAppText({ lat, lng } = {}) {
   return parts.join("\n");
 }
 
-function buildWhatsAppUrl({ waPhone, lat, lng } = {}) {
-  if (!waPhone) return null;
+/**
+ * Încearcă să deschidă direct aplicația WhatsApp (pe mobil),
+ * apoi face fallback la wa.me dacă nu merge (desktop / blocat / etc).
+ */
+function openWhatsAppDirect({ waPhone, lat, lng } = {}) {
+  if (!waPhone) return;
+
   const text = buildWhatsAppText({ lat, lng });
-  return `https://wa.me/${waPhone}?text=${encodeURIComponent(text)}`;
+
+  const appUrl = `whatsapp://send?phone=${waPhone}&text=${encodeURIComponent(
+    text
+  )}`;
+  const webUrl = `https://wa.me/${waPhone}?text=${encodeURIComponent(text)}`;
+
+  // Heuristic: pe desktop e inutil să încercăm whatsapp://
+  const ua = typeof navigator !== "undefined" ? navigator.userAgent : "";
+  const isMobile = /Android|iPhone|iPad|iPod/i.test(ua);
+
+  if (!isMobile) {
+    window.location.href = webUrl;
+    return;
+  }
+
+  // Încearcă aplicația
+  window.location.href = appUrl;
+
+  // Fallback dacă nu se deschide aplicația
+  const t = setTimeout(() => {
+    window.location.href = webUrl;
+  }, 900);
+
+  const onVis = () => {
+    if (document.visibilityState === "hidden") {
+      clearTimeout(t);
+      document.removeEventListener("visibilitychange", onVis);
+    }
+  };
+  document.addEventListener("visibilitychange", onVis);
 }
 
 /* ================= COMPONENT ================= */
@@ -88,57 +122,56 @@ export default function HeaderClient() {
 
   /* ================= ACTIONS ================= */
 
-  // 💬 WhatsApp fără locație
+  // 💬 WhatsApp fără locație (direct app + fallback)
   const onWhatsAppChat = () => {
     if (!waPhone) {
       window.location.href = `tel:${SITE?.phone2 ?? SITE?.phone1 ?? ""}`;
       return;
     }
 
-    window.location.href = buildWhatsAppUrl({ waPhone });
+    openWhatsAppDirect({ waPhone });
   };
 
-const onWhatsAppWithLocation = () => {
-  if (!waPhone) {
-    window.location.href = `tel:${SITE?.phone2 ?? SITE?.phone1 ?? ""}`;
-    return;
-  }
+  // 📍 WhatsApp cu locație (direct app + fallback)
+  const onWhatsAppWithLocation = () => {
+    if (!waPhone) {
+      window.location.href = `tel:${SITE?.phone2 ?? SITE?.phone1 ?? ""}`;
+      return;
+    }
 
-  // opțional: o confirmare “a ta” înainte să apară prompt-ul browserului
-  const ok = window.confirm("Vrei să trimiți locația ta pe WhatsApp?");
-  if (!ok) {
-    // dacă nu vrea locație, deschidem WhatsApp fără locație
-    window.location.href = buildWhatsAppUrl({ waPhone });
-    return;
-  }
+    // opțional: confirmare înainte de prompt-ul browserului
+    const ok = window.confirm("Vrei să trimiți locația ta pe WhatsApp?");
+    if (!ok) {
+      openWhatsAppDirect({ waPhone });
+      return;
+    }
 
-  if (!navigator.geolocation) {
-    window.location.href = buildWhatsAppUrl({ waPhone });
-    return;
-  }
+    if (!navigator.geolocation) {
+      openWhatsAppDirect({ waPhone });
+      return;
+    }
 
-  if (gpsLoading) return;
-  setGpsLoading(true);
+    if (gpsLoading) return;
+    setGpsLoading(true);
 
-  navigator.geolocation.getCurrentPosition(
-    (pos) => {
-      setGpsLoading(false);
-      const { latitude, longitude } = pos.coords;
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        setGpsLoading(false);
+        const { latitude, longitude } = pos.coords;
 
-      // ✅ fără popup, doar redirect în același tab
-      window.location.href = buildWhatsAppUrl({
-        waPhone,
-        lat: latitude,
-        lng: longitude,
-      });
-    },
-    () => {
-      setGpsLoading(false);
-      window.location.href = buildWhatsAppUrl({ waPhone });
-    },
-    { enableHighAccuracy: true, timeout: 8000, maximumAge: 30000 }
-  );
-};
+        openWhatsAppDirect({
+          waPhone,
+          lat: latitude,
+          lng: longitude,
+        });
+      },
+      () => {
+        setGpsLoading(false);
+        openWhatsAppDirect({ waPhone });
+      },
+      { enableHighAccuracy: true, timeout: 8000, maximumAge: 30000 }
+    );
+  };
 
   const onMenu = () => setMenuOpen((v) => !v);
 
@@ -168,6 +201,9 @@ const onWhatsAppWithLocation = () => {
               className={styles.iconBtn}
               onClick={() => setPhoneMenuOpen((v) => !v)}
               aria-label="Apelează"
+              title="Apelează"
+              aria-expanded={phoneMenuOpen}
+              aria-haspopup="menu"
             >
               📞
             </button>
@@ -175,6 +211,7 @@ const onWhatsAppWithLocation = () => {
             {phoneMenuOpen && (
               <div
                 role="menu"
+                aria-label="Alege numărul de telefon"
                 style={{
                   position: "absolute",
                   right: 0,
@@ -192,7 +229,13 @@ const onWhatsAppWithLocation = () => {
                   role="menuitem"
                   href={`tel:${SITE.phone1}`}
                   onClick={() => setPhoneMenuOpen(false)}
-                  style={{ display: "block", padding: 10 }}
+                  style={{
+                    display: "block",
+                    padding: "10px 10px",
+                    borderRadius: 10,
+                    textDecoration: "none",
+                    color: "inherit",
+                  }}
                 >
                   📞 {SITE.phone1}
                 </a>
@@ -201,7 +244,14 @@ const onWhatsAppWithLocation = () => {
                   role="menuitem"
                   href={`tel:${SITE.phone2}`}
                   onClick={() => setPhoneMenuOpen(false)}
-                  style={{ display: "block", padding: 10 }}
+                  style={{
+                    display: "block",
+                    padding: "10px 10px",
+                    borderRadius: 10,
+                    textDecoration: "none",
+                    color: "inherit",
+                    marginTop: 4,
+                  }}
                 >
                   📞 {SITE.phone2}
                 </a>
@@ -214,8 +264,9 @@ const onWhatsAppWithLocation = () => {
             type="button"
             className={styles.iconBtn}
             onClick={onWhatsAppWithLocation}
-            disabled={gpsLoading}
+            aria-label="Trimite locația pe WhatsApp"
             title={gpsLoading ? "Se ia locația…" : "WhatsApp cu locație"}
+            disabled={gpsLoading}
           >
             📍
           </button>
@@ -225,6 +276,7 @@ const onWhatsAppWithLocation = () => {
             type="button"
             className={styles.iconBtn}
             onClick={onWhatsAppChat}
+            aria-label="Deschide WhatsApp"
             title="WhatsApp"
           >
             💬
@@ -235,6 +287,8 @@ const onWhatsAppWithLocation = () => {
             type="button"
             className={styles.iconBtn}
             onClick={toggleTheme}
+            aria-label="Schimbă tema"
+            title="Schimbă tema"
           >
             {theme === "dark" ? "☀️" : "🌙"}
           </button>
@@ -244,6 +298,8 @@ const onWhatsAppWithLocation = () => {
             type="button"
             className={styles.menuBtn}
             onClick={onMenu}
+            aria-label="Meniu"
+            title="Meniu"
           >
             ☰
           </button>

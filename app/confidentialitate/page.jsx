@@ -1,5 +1,6 @@
 import { defaultMetadata } from "../../lib/seo.js";
 import { SITE } from "../../lib/config.js";
+import Link from "next/link";
 
 export const metadata = defaultMetadata({
   title: "Confidențialitate & cookie",
@@ -56,7 +57,11 @@ export default function ConfidentialitatePage() {
           <li><b>Date de contact:</b> nume (dacă îl oferi), telefon, e-mail.</li>
           <li><b>Detalii solicitare:</b> tip problemă, reper, mesaje (telefon/WhatsApp/SMS/e-mail).</li>
           <li><b>Locație:</b> doar dacă alegi să o trimiți (GPS / link Maps / coordonate).</li>
-          <li><b>Date tehnice:</b> IP, device/browser, cookie-uri (vezi secțiunea Cookie).</li>
+          <li>
+  <b>Date tehnice:</b> informații minime de securitate (de exemplu IP și user-agent) care pot
+  fi înregistrate în loguri pentru protecția site-ului și prevenirea abuzurilor.
+</li>
+
         </ul>
       </section>
 
@@ -96,20 +101,26 @@ export default function ConfidentialitatePage() {
         </p>
       </section>
 
-      <section style={{ marginTop: 18 }}>
-        <h2>7) Cookie</h2>
-        <p style={{ opacity: 0.92, lineHeight: 1.55 }}>
-          Site-ul poate utiliza cookie-uri pentru funcționare și, opțional, pentru statistici/marketing (în funcție de ce ai activat).
-        </p>
-        <ul style={{ opacity: 0.92, lineHeight: 1.6 }}>
-          <li><b>Necesare:</b> funcționare și securitate (nu pot fi dezactivate din banner).</li>
-          <li><b>Statistice:</b> măsurarea traficului (de regulă pe baza consimțământului).</li>
-          <li><b>Marketing:</b> remarketing/identificatori (doar cu consimțământ).</li>
-        </ul>
-        <p style={{ opacity: 0.92, lineHeight: 1.55 }}>
-          Dacă ai un banner de consimțământ, îți poți schimba opțiunile oricând din „Preferințe cookie” (dacă ai implementat această funcție).
-        </p>
-      </section>
+     <section style={{ marginTop: 18 }}>
+  <h2>7) Cookie</h2>
+
+  <p style={{ opacity: 0.92, lineHeight: 1.55 }}>
+    În prezent, site-ul este unul de prezentare și nu utilizează cookie-uri de marketing sau
+    tehnologii de urmărire (tracking) pentru publicitate/remarketing.
+  </p>
+
+  <p style={{ opacity: 0.92, lineHeight: 1.55 }}>
+    Putem folosi cookie-uri strict necesare pentru funcționarea tehnică a site-ului (de exemplu
+    pentru securitate și prevenirea abuzurilor). Acestea nu sunt folosite pentru a te urmări în
+    scopuri de marketing.
+  </p>
+
+  <p style={{ opacity: 0.92, lineHeight: 1.55 }}>
+    Dacă vom activa în viitor servicii de analiză a traficului (ex. Google Analytics) sau
+    publicitate (ex. Google Ads) care folosesc cookie-uri opționale, vom afișa un mecanism de
+    consimțământ (banner) prin care vei putea accepta/refuza aceste cookie-uri.
+  </p>
+</section>
 
       <section style={{ marginTop: 18 }}>
         <h2>8) Drepturile tale</h2>
@@ -140,7 +151,10 @@ export default function ConfidentialitatePage() {
       </section>
 
       <div style={{ marginTop: 28 }}>
-        <a href="/" style={{ textDecoration: "underline" }}>← Înapoi acasă</a>
+       <Link href="/" style={{ textDecoration: "underline" }}>
+  ← Înapoi acasă
+</Link>
+
       </div>
     </main>
   );
