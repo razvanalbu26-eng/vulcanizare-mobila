@@ -1,8 +1,8 @@
 .card{
   padding: 22px;
   border-radius: 20px;
-
   border: 1px solid var(--border-soft);
+
   background:
     radial-gradient(1200px 420px at 10% -20%, var(--accent-soft), transparent 52%),
     radial-gradient(900px 450px at 110% 20%, color-mix(in srgb, var(--info) 18%, transparent), transparent 55%),
@@ -49,6 +49,7 @@
   line-height: 1.15;
   color: var(--text-main);
 }
+
 .sub{
   margin:8px 0 0;
   color: var(--text-muted);
@@ -272,15 +273,16 @@
   margin-top: 6px;
 }
 
-/* CTA */
+/* CTA: 2 coloane egale pe desktop (fix pentru “buton mic”) */
 .cta{
-  display:flex;
-  gap: 10px;
-  flex-wrap:wrap;
   margin-top: 4px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
 }
 
 .primary, .secondary{
+  width: 100%;
   padding: 12px 14px;
   border-radius: 14px;
   text-decoration:none;
@@ -313,10 +315,38 @@
 .secondary:hover{ border-color: var(--border-strong); }
 .primary:active, .secondary:active{ transform: scale(.985); }
 
-/* =========================
-   MOBILE (compact UI)
-========================= */
+/* Phone popover (CSS, fără inline) */
+.phoneWrap{
+  position: relative;
+  width: 100%;
+}
 
+.phoneMenu{
+  position: absolute;
+  right: 0;
+  bottom: calc(100% + 8px);
+  min-width: 220px;
+  padding: 8px;
+  border-radius: 12px;
+  background: var(--panel, #111);
+  border: 1px solid rgba(255,255,255,0.12);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+  z-index: 50;
+}
+
+.phoneItem{
+  display: block;
+  padding: 10px 10px;
+  border-radius: 10px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.phoneItem:hover{
+  background: color-mix(in srgb, #ffffff 6%, transparent);
+}
+
+/* MOBILE */
 @media (max-width: 720px) {
   .card{
     padding: 14px;
@@ -406,17 +436,19 @@
   .ticks{ font-size: 10.5px; margin-top: 5px; }
 
   /* CTA full width pe mobil */
-  .cta{ gap: 10px; margin-top: 6px; }
+  .cta{
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin-top: 6px;
+  }
+
   .primary, .secondary{
-    width: 100%;
-    text-align: center;
+    font-size: 14px;
     padding: 12px 12px;
     border-radius: 14px;
-    font-size: 14px;
   }
 }
 
-/* Extra small phones */
 @media (max-width: 420px) {
   .card{ padding: 12px; border-radius: 14px; }
   .h3{ font-size: 17px; }

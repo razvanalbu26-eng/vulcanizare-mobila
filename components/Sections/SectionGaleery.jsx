@@ -34,6 +34,7 @@ export default function SectionGallery() {
                         src={it.src}
                         poster={it.poster}
                         controls
+                        muted
                         preload="metadata"
                         playsInline
                       />
@@ -48,7 +49,11 @@ export default function SectionGallery() {
                     )}
                   </div>
 
-                  {it.alt ? <figcaption className={styles.galleryCaption}>{it.alt}</figcaption> : null}
+                  {it.alt ? (
+                    <figcaption className={styles.galleryCaption}>
+                      {it.alt}
+                    </figcaption>
+                  ) : null}
                 </figure>
               );
             })}

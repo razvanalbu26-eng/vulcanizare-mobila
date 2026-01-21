@@ -32,6 +32,9 @@ export default function CoverageMapInner() {
   const clientMarkerRef = useRef(null);
   const circleRef = useRef(null);
   const tileRef = useRef(null);
+
+  // ✅ 2 linii pentru traseu: halo + linie principală
+  const routeHaloRef = useRef(null);
   const routeLineRef = useRef(null);
 
   const base = useMemo(
@@ -40,11 +43,15 @@ export default function CoverageMapInner() {
   );
 
   const basePoint = useMemo(() => [base.lat, base.lng], [base.lat, base.lng]);
-  const clientPoint = client ? [client.lat, client.lng] : null;
+
+  const clientPoint = useMemo(
+    () => (client ? [client.lat, client.lng] : null),
+    [client]
+  );
 
   const radiusKm = SITE.serviceRadiusKm ?? 60;
 
-  // fallback linie dreaptă (în caz că OSRM nu merge)
+  // fallback linie dreaptă (în caz OSRM nu merge)
   const fallback = useMemo(() => {
     if (!client) return null;
 
@@ -76,7 +83,6 @@ export default function CoverageMapInner() {
     if (!el) return;
 
     try {
-      // eslint-disable-next-line no-underscore-dangle
       if (el._leaflet_id) delete el._leaflet_id;
     } catch {}
     try {
@@ -84,13 +90,13 @@ export default function CoverageMapInner() {
     } catch {}
 
     const map = L.map(el, {
-  scrollWheelZoom: true,     // ✅ zoom cu rotița
-  touchZoom: true,           // ✅ pinch zoom pe telefon
-  doubleClickZoom: true,     // ✅ zoom la dublu click/tap
-  boxZoom: true,             // ✅ zoom selectând cu mouse
-  dragging: true,            // ✅ glisare (deja e true implicit)
-  zoomControl: true,         // + / - în colț
-}).setView(basePoint, 12);
+      scrollWheelZoom: true,
+      touchZoom: true,
+      doubleClickZoom: true,
+      boxZoom: true,
+      dragging: true,
+      zoomControl: true,
+    }).setView(basePoint, 12);
 
     mapRef.current = map;
 
@@ -125,7 +131,6 @@ export default function CoverageMapInner() {
       } catch {}
 
       try {
-        // eslint-disable-next-line no-underscore-dangle
         if (el._leaflet_id) delete el._leaflet_id;
       } catch {}
       try {
@@ -137,11 +142,13 @@ export default function CoverageMapInner() {
       clientMarkerRef.current = null;
       circleRef.current = null;
       tileRef.current = null;
+
+      routeHaloRef.current = null;
       routeLineRef.current = null;
     };
   }, [basePoint, base.lat, base.lng, radiusKm]);
 
-  // marker client + fit bounds
+  // marker client + reset când nu avem client
   useEffect(() => {
     const map = mapRef.current;
     if (!map) return;
@@ -155,12 +162,20 @@ export default function CoverageMapInner() {
         } catch {}
         clientMarkerRef.current = null;
       }
+
+      if (routeHaloRef.current) {
+        try {
+          routeHaloRef.current.remove();
+        } catch {}
+        routeHaloRef.current = null;
+      }
       if (routeLineRef.current) {
         try {
           routeLineRef.current.remove();
         } catch {}
         routeLineRef.current = null;
       }
+
       setRouteInfo(null);
       return;
     }
@@ -181,7 +196,6 @@ export default function CoverageMapInner() {
 
   // OSRM routing
   async function buildRoute(fromLatLng, toLatLng) {
-    // OSRM: lon,lat
     const from = `${fromLatLng[1]},${fromLatLng[0]}`;
     const to = `${toLatLng[1]},${toLatLng[0]}`;
 
@@ -205,6 +219,50 @@ export default function CoverageMapInner() {
     };
   }
 
+  // ✅ Stil traseu mai clar (halo + linie principală)
+  function drawStyledRoute(map, latlngs) {
+    // curăță vechiul traseu
+    if (routeHaloRef.current) {
+      try {
+        routeHaloRef.current.remove();
+      } catch {}
+      routeHaloRef.current = null;
+    }
+    if (routeLineRef.current) {
+      try {
+        routeLineRef.current.remove();
+      } catch {}
+      routeLineRef.current = null;
+    }
+
+    // 1) HALO (sub) - gros, semi-transparent
+    routeHaloRef.current = L.polyline(latlngs, {
+      weight: 10,
+      opacity: 0.35,
+      lineCap: "round",
+      lineJoin: "round",
+      // nu setez culoare explicită ca să fie ok în orice temă;
+      // Leaflet default e albastru; dacă vrei, îți leg la var(--accent)
+    }).addTo(map);
+
+    // 2) LINIE PRINCIPALĂ (sus) - mai subțire, foarte clară
+    routeLineRef.current = L.polyline(latlngs, {
+      weight: 5,
+      opacity: 0.95,
+      lineCap: "round",
+      lineJoin: "round",
+      // opțional: dashed pentru “altfel”
+      // dashArray: "8 10",
+    }).addTo(map);
+
+    // aduce linia principală în față
+    try {
+      routeLineRef.current.bringToFront();
+      clientMarkerRef.current?.bringToFront?.();
+      baseMarkerRef.current?.bringToFront?.();
+    } catch {}
+  }
+
   async function drawRoute(toLatLng) {
     const map = mapRef.current;
     if (!map) return;
@@ -215,19 +273,8 @@ export default function CoverageMapInner() {
     try {
       const r = await buildRoute(basePoint, toLatLng);
 
-      if (routeLineRef.current) {
-        try {
-          routeLineRef.current.remove();
-        } catch {}
-        routeLineRef.current = null;
-      }
+      drawStyledRoute(map, r.latlngs);
 
-      routeLineRef.current = L.polyline(r.latlngs, {
-        weight: 5,
-        opacity: 0.8,
-      }).addTo(map);
-
-      // fit bounds pe rută
       const bounds = routeLineRef.current.getBounds();
       map.fitBounds(bounds, { padding: [32, 32] });
 
@@ -246,18 +293,15 @@ export default function CoverageMapInner() {
   }
 
   function geoErrorMessage(error) {
-    // 1 = PERMISSION_DENIED
     if (error?.code === 1) {
       return (
         "Locația este blocată în browser (ai respins de câteva ori). " +
         "Dă click pe iconița de lângă adresă (lacăt / tune) → Permissions → Location → Allow, apoi reîncarcă pagina."
       );
     }
-    // 2 = POSITION_UNAVAILABLE
     if (error?.code === 2) {
       return "Nu am putut determina locația (semnal slab). Încearcă din nou.";
     }
-    // 3 = TIMEOUT
     if (error?.code === 3) {
       return "A expirat cererea de locație. Încearcă din nou.";
     }
@@ -285,7 +329,6 @@ export default function CoverageMapInner() {
         };
         setClient(nextClient);
 
-        // calculează ruta imediat
         await drawRoute([nextClient.lat, nextClient.lng]);
       },
       (error) => {
@@ -296,9 +339,60 @@ export default function CoverageMapInner() {
     );
   }
 
-  const googleMapsUrl = client
-    ? `https://maps.google.com/?q=${client.lat},${client.lng}`
-    : `https://maps.google.com/?q=${base.lat},${base.lng}`;
+  // Maps helpers
+  function mapsPlaceUrl() {
+    return `https://maps.google.com/?q=${base.lat},${base.lng}`;
+  }
+
+  function mapsDirectionsUrl(originLat, originLng) {
+    return `https://www.google.com/maps/dir/?api=1&origin=${originLat},${originLng}&destination=${base.lat},${base.lng}&travelmode=driving`;
+  }
+
+  // Deschide Maps: dacă nu avem client, încearcă să ia locația înainte
+  const openMaps = () => {
+    setErr("");
+
+    if (client) {
+      window.open(
+        mapsDirectionsUrl(client.lat, client.lng),
+        "_blank",
+        "noopener,noreferrer"
+      );
+      return;
+    }
+
+    if (!navigator.geolocation) {
+      window.open(mapsPlaceUrl(), "_blank", "noopener,noreferrer");
+      return;
+    }
+
+    if (gpsLoading) return;
+    setGpsLoading(true);
+
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        setGpsLoading(false);
+        const originLat = pos.coords.latitude;
+        const originLng = pos.coords.longitude;
+
+        const nextClient = { lat: originLat, lng: originLng };
+        setClient(nextClient);
+        drawRoute([originLat, originLng]);
+
+        window.open(
+          mapsDirectionsUrl(originLat, originLng),
+          "_blank",
+          "noopener,noreferrer"
+        );
+      },
+      (error) => {
+        setGpsLoading(false);
+        setErr(geoErrorMessage(error));
+        window.open(mapsPlaceUrl(), "_blank", "noopener,noreferrer");
+      },
+      { enableHighAccuracy: true, timeout: 8000, maximumAge: 30000 }
+    );
+  };
 
   const inCoverage = fallback ? fallback.inCoverage : null;
 
@@ -322,14 +416,15 @@ export default function CoverageMapInner() {
             {gpsLoading ? "Se ia locația…" : "📍 Preia locația mea"}
           </button>
 
-          <a
+          <button
+            type="button"
             className={styles.btnGhost}
-            href={googleMapsUrl}
-            target="_blank"
-            rel="noopener noreferrer"
+            onClick={openMaps}
+            disabled={gpsLoading}
+            title={gpsLoading ? "Se ia locația…" : "Deschide direcțiile în Maps"}
           >
-            🗺️ Deschide în Maps
-          </a>
+            {gpsLoading ? "Se ia locația…" : "🗺️ Deschide în Maps"}
+          </button>
         </div>
       </div>
 

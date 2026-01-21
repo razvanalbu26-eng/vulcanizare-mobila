@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import styles from "./BurgerMenu.module.css";
 import { SITE } from "../../lib/config.js";
 
@@ -20,10 +20,13 @@ export default function BurgerMenu({
   const isControlled = typeof openProp === "boolean";
   const open = isControlled ? openProp : openLocal;
 
-  const setOpen = (next) => {
-    if (isControlled) onOpenChange?.(next);
-    else setOpenLocal(next);
-  };
+  const setOpen = useCallback(
+    (next) => {
+      if (isControlled) onOpenChange?.(next);
+      else setOpenLocal(next);
+    },
+    [isControlled, onOpenChange]
+  );
 
   useEffect(() => {
     function onKey(e) {
@@ -31,8 +34,7 @@ export default function BurgerMenu({
     }
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [setOpen]);
 
   useEffect(() => {
     function onClickOutside(e) {
@@ -41,7 +43,7 @@ export default function BurgerMenu({
     }
     document.addEventListener("mousedown", onClickOutside);
     return () => document.removeEventListener("mousedown", onClickOutside);
-  }, [open]);
+  }, [open, setOpen]);
 
   function jump(id) {
     const el = document.getElementById(id);

@@ -1,5 +1,6 @@
 import { defaultMetadata } from "../../lib/seo.js";
 import { SITE } from "../../lib/config.js";
+import Link from "next/link";
 
 export const metadata = defaultMetadata({
   title: "Termeni, condiții & informații legale",
@@ -97,21 +98,39 @@ export default function TermeniPage() {
       </section>
 
       <section id="t3" style={{ marginTop: 22 }}>
-        <h2>3) Anulări, reprogramări, rambursări</h2>
-        <ul style={{ opacity: 0.92, lineHeight: 1.6 }}>
-          <li><b>Anulare:</b> recomandat cu minimum 12–24h înainte (în funcție de interval și disponibilitate).</li>
-          <li>
-            <b>Deplasare efectuată:</b> dacă echipa ajunge și intervenția nu poate fi prestată din motive imputabile clientului
-            (adresă greșită, lipsă acces, lipsă răspuns), se poate percepe taxa de deplasare.
-          </li>
-          <li><b>Reprogramare:</b> se face în limita disponibilității, preferabil cu minimum 12–24h înainte.</li>
-          <li>
-            <b>Rambursări:</b> dacă există plăți online (în funcție de integrare), rambursarea se face pe același instrument de plată,
-            în 3–14 zile lucrătoare (în funcție de bancă/procesator).
-          </li>
-          <li><b>Urgențe:</b> serviciile începute/prestate cu acordul clientului nu sunt rambursabile pentru partea deja efectuată.</li>
-        </ul>
-      </section>
+  <h2>3) Anulări, reprogramări, rambursări</h2>
+  <ul style={{ opacity: 0.92, lineHeight: 1.6 }}>
+    <li>
+      <b>Anulare:</b> recomandat cu minimum 12–24h înainte (în funcție de interval și disponibilitate).
+    </li>
+
+    <li>
+      <b>Deplasare efectuată:</b> dacă echipa ajunge și intervenția nu poate fi prestată din motive imputabile clientului
+      (adresă greșită, lipsă acces, lipsă răspuns), se poate percepe taxa de deplasare.
+    </li>
+
+    <li>
+      <b>Reprogramare:</b> se face în limita disponibilității, preferabil cu minimum 12–24h înainte.
+    </li>
+
+    <li>
+      <b>Rambursări:</b> dacă există plăți online (în funcție de integrare), rambursarea se face pe același instrument de plată,
+      în 3–14 zile lucrătoare (în funcție de bancă/procesator).
+    </li>
+
+    <li>
+      <b>Urgențe:</b> serviciile începute/prestate cu acordul clientului nu sunt rambursabile pentru partea deja efectuată.
+    </li>
+
+    {/* ✅ ADAUGĂ DOAR ACEST LI */}
+    <li>
+      <b>Drept de retragere:</b> conform OUG 34/2014, pentru serviciile de intervenție de urgență
+      prestate la cererea expresă a clientului, dreptul de retragere nu se aplică după
+      începerea execuției serviciului.
+    </li>
+  </ul>
+</section>
+
 
       <section id="t4" style={{ marginTop: 22 }}>
         <h2>4) Garanții, răspundere, limitări</h2>
@@ -160,7 +179,10 @@ export default function TermeniPage() {
       </section>
 
       <div style={{ marginTop: 28 }}>
-        <a href="/" style={{ textDecoration: "underline" }}>← Înapoi acasă</a>
+        <Link href="/" style={{ textDecoration: "underline" }}>
+  ← Înapoi acasă
+</Link>
+
       </div>
     </main>
   );

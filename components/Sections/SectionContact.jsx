@@ -1,10 +1,10 @@
 import styles from "./SectionBlock.module.css";
-import CTAButtons from "../CTAButtons/CTAButtons";
+import CTAButtons from "../CTAButtons/CTAButtons.jsx";
 import { SITE } from "../../lib/config.js";
 
 export default function SectionContact() {
   return (
-    <div className={styles.wrap}>
+    <div className={styles.wrap} id="contact">
       <div className={styles.head}>
         <h2 className={styles.h2}>Contact rapid</h2>
         <p className={styles.p}>
@@ -13,13 +13,12 @@ export default function SectionContact() {
       </div>
 
       <div className={styles.cardWide}>
-        {/* TOP ROW */}
         <div className={styles.row}>
           <div>
             <div className={styles.title}>Telefon</div>
             <div className={styles.desc}>
-              <a href={`tel:${SITE.phone}`} className={styles.linkStrong}>
-                {SITE.phone}
+              <a href={`tel:${SITE.phone1 ?? SITE.phone}`} className={styles.linkStrong}>
+                {SITE.phone1 ?? SITE.phone}
               </a>
             </div>
           </div>
@@ -30,7 +29,6 @@ export default function SectionContact() {
           </div>
         </div>
 
-        {/* QUICK FACTS */}
         <div className={styles.facts}>
           <div className={styles.fact}>
             <div className={styles.factK}>Acoperire</div>
@@ -50,7 +48,6 @@ export default function SectionContact() {
           </div>
         </div>
 
-        {/* HOW-TO */}
         <div className={styles.how}>
           <div className={styles.howTitle}>Cum trimiți pe WhatsApp (recomandat)</div>
           <ol className={styles.howList}>
@@ -60,7 +57,6 @@ export default function SectionContact() {
           </ol>
         </div>
 
-        {/* CTA */}
         <div className={styles.ctaArea}>
           <CTAButtons />
           <div className={styles.smallNote}>
