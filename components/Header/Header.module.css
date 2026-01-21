@@ -227,3 +227,50 @@
     font-size: 1.25rem;
   }
 }
+/* =========================
+   PHONE DROPDOWN (uses global vars)
+========================= */
+
+.phoneMenu{
+  position: absolute;
+  right: 0;
+  top: calc(100% + 8px);
+
+  min-width: 200px;
+  padding: 6px;
+
+  background: var(--bg-panel);
+  border: 1px solid var(--border-soft);
+  border-radius: 14px;
+
+  box-shadow: var(--shadow-strong);
+  z-index: 60;
+}
+
+.phoneItem{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 10px 12px;
+  border-radius: 10px;
+
+  text-decoration: none;
+  color: var(--text-main);     /* 🔥 fix principal */
+  font-weight: 700;
+
+  transition: background-color .15s ease, border-color .15s ease;
+}
+
+.phoneItem:hover{
+  background: var(--bg-card);
+}
+
+.phoneItem:active{
+  background: var(--bg-soft);
+}
+
+.phoneItem:focus-visible{
+  outline: 2px solid color-mix(in srgb, var(--accent) 40%, transparent);
+  outline-offset: 2px;
+}

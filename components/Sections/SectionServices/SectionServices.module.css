@@ -42,13 +42,22 @@
   display:grid;
   grid-template-columns: 1fr;
   gap:14px;
-
-  /* FIX: permite shrink corect */
   min-width: 0;
 }
 
+@media (min-width:720px){
+  .section{ padding:26px 18px 34px; }
+  .h2{ font-size:26px; }
+  .p{ font-size:15px; }
+  .grid{ grid-template-columns:repeat(2,1fr); gap:16px; }
+}
+
+@media (min-width:1024px){
+  .grid{ grid-template-columns:repeat(4,1fr); }
+}
+
 /* =========================
-   CARD
+   CARD (perfect alignment)
 ========================= */
 .card{
   border-radius:18px;
@@ -56,17 +65,14 @@
 
   border:1px solid var(--border-soft);
   background: var(--bg-card);
-
-  /* ✅ shadow theme-aware (light folosește --shadow-soft din globals) */
-  box-shadow: var(--shadow-soft, 0 16px 46px rgba(0,0,0,0.22));
+  box-shadow: var(--shadow-soft);
 
   display:flex;
   flex-direction:column;
   gap:14px;
 
-  /* FIX: nu mai “împinge” grid-ul */
   min-width: 0;
-
+  height: 100%;                 /* ✅ carduri egale în grid */
   transition: transform .08s ease, border-color .15s ease, background-color .15s ease;
 }
 
@@ -99,14 +105,16 @@
   letter-spacing:-0.2px;
   color: var(--text-main);
 
-  /* FIX: titluri lungi */
   min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-/* kicker (badge) */
+@media (min-width:720px){
+  .title{ font-size:18px; }
+}
+
 .kicker{
   font-size:12px;
   padding:6px 10px;
@@ -128,6 +136,10 @@
   color: var(--text-muted);
 }
 
+@media (min-width:720px){
+  .desc{ font-size:14px; }
+}
+
 /* =========================
    CHIPS
 ========================= */
@@ -135,8 +147,6 @@
   display:flex;
   flex-wrap:wrap;
   gap:8px;
-
-  /* FIX */
   min-width: 0;
 }
 
@@ -144,12 +154,11 @@
   font-size:12px;
   padding:6px 10px;
   border-radius:999px;
-  border:1px solid var(--border-soft);
 
+  border:1px solid var(--border-soft);
   background: var(--bg-soft);
   color: var(--text-main);
 
-  /* FIX: chips lungi nu mai “sparg” */
   max-width: 100%;
   white-space: normal;
 }
@@ -161,13 +170,13 @@
   display:flex;
   gap:10px;
   align-items:flex-start;
+
   padding:12px;
   border-radius:14px;
 
   border:1px solid var(--border-soft);
   background: var(--bg-soft);
 
-  /* FIX */
   min-width: 0;
 }
 
@@ -182,7 +191,6 @@
   font-size:12px;
   font-weight:900;
 
-  /* ✅ folosește variabila globală */
   background: var(--info);
   color: rgba(0,0,0,0.88);
 
@@ -194,36 +202,45 @@
   font-size:12px;
   line-height:1.5;
   color: var(--text-muted);
-
-  /* FIX */
   min-width: 0;
 }
 
 /* =========================
-   ACTIONS ROW
+   ACTIONS ROW (grid -> perfect alignment)
 ========================= */
 .actionsRow{
-  display:flex;
-  gap:10px;
-  margin-top:6px;
-
-  /* FIX: permite wrap + shrink */
+  margin-top: auto;               /* ✅ împinge acțiunile jos */
+  display: grid;
+  grid-template-columns: 1fr;     /* mobile: pe rând */
+  gap: 10px;
   min-width: 0;
-  flex-wrap: wrap;
+}
+
+@media (min-width: 420px){
+  .actionsRow{
+    grid-template-columns: repeat(3, minmax(0, 1fr)); /* ✅ 3 butoane egale */
+    align-items: stretch;
+  }
+}
+
+/* wrapper pentru butonul de telefon (contează pentru egalizare) */
+.phoneWrap{
+  position: relative;
+  min-width: 0;
 }
 
 /* =========================
-   BUTTONS
+   BUTTONS (same height, same alignment)
 ========================= */
 .call,
 .wa,
 .waGhost{
-  /* FIX: pot să se micșoreze în flex */
-  flex: 1 1 0;
+  width: 100%;
   min-width: 0;
 
+  height: 44px;                   /* ✅ aceeași înălțime */
   border-radius:14px;
-  padding:12px 10px;
+  padding: 0 10px;
 
   border:1px solid var(--border-soft);
   font-weight:900;
@@ -237,7 +254,6 @@
   justify-content:center;
   gap:8px;
 
-  /* păstrăm pe o linie, dar fără să “spargă” */
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -279,7 +295,7 @@
 .wa:hover{ border-color: color-mix(in srgb, var(--accent) 62%, transparent); }
 .waGhost:hover{ border-color: var(--border-strong); }
 
-/* Focus (accessibility) */
+/* Focus */
 .call:focus-visible,
 .wa:focus-visible,
 .waGhost:focus-visible{
@@ -294,67 +310,54 @@
 }
 
 /* =========================
-   FOOT NOTE
+   PHONE DROPDOWN (services)
 ========================= */
-.footerNote{
-  margin-top:14px;
-  display:flex;
-  gap:10px;
-  align-items:center;
-  color: var(--text-muted);
-  font-size:12px;
+.phoneMenu{
+  position: absolute;
+  left: 0;
+  bottom: calc(100% + 8px);
+
+  width: max-content;
+  min-width: 220px;
+  max-width: 320px;
+
+  padding: 8px;
+  border-radius: 12px;
+
+  background: var(--bg-panel);
+  border: 1px solid var(--border-soft);
+  box-shadow: var(--shadow-strong);
+  z-index: 60;
 }
 
-.noteDot{
-  width:10px;
-  height:10px;
-  border-radius:999px;
-  background: var(--accent);
-  box-shadow:0 0 0 6px var(--accent-soft);
+.phoneItem{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 10px 12px;
+  border-radius: 10px;
+
+  text-decoration: none;
+  color: var(--text-main);
+  font-weight: 800;
+
+  transition: background-color .15s ease;
+}
+
+.phoneItem + .phoneItem{ margin-top: 4px; }
+
+.phoneItem:hover{ background: var(--bg-card); }
+.phoneItem:active{ background: var(--bg-soft); }
+
+.phoneItem:focus-visible{
+  outline: 2px solid color-mix(in srgb, var(--accent) 40%, transparent);
+  outline-offset: 2px;
 }
 
 /* =========================
-   RESPONSIVE
+   EXTRA SAFE: foarte mic
 ========================= */
-@media (min-width:720px){
-  .section{ padding:26px 18px 34px; }
-  .h2{ font-size:26px; }
-  .p{ font-size:15px; }
-  .grid{ grid-template-columns:repeat(2,1fr); gap:16px; }
-  .title{ font-size:18px; }
-  .desc{ font-size:14px; }
-}
-
-@media (min-width:1024px){
-  .grid{ grid-template-columns:repeat(4,1fr); }
-}
-
-/* Extra safe: ecrane foarte mici */
 @media (max-width:360px){
-  .actionsRow{
-    flex-direction:column;
-  }
-}
-
-.quickCall{
-  align-self: flex-start;
-  margin-top: 6px;
-
-  font-size: 13px;
-  font-weight: 800;
-  text-decoration: none;
-
-  color: var(--info);
-
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-
-  opacity: .9;
-  transition: opacity .15s ease, transform .08s ease;
-}
-
-.quickCall:hover{
-  opacity: 1;
-  transform: translateX(2px);
+  .actionsRow{ grid-template-columns: 1fr; }
 }

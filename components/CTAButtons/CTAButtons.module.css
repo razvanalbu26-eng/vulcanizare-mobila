@@ -58,33 +58,49 @@
 }
 
 /* =========================
-   POPOVER TELEFON
+   POPOVER TELEFON (global vars)
 ========================= */
 .phoneMenu{
   position: absolute;
   left: 0;
-  right: 0;                /* ✅ aceeași lățime ca butonul */
+  right: 0;                /* aceeași lățime ca butonul */
   top: calc(100% + 8px);
 
   padding: 8px;
   border-radius: 12px;
 
-  background: var(--panel, #111);
-  border: 1px solid rgba(255,255,255,0.12);
-  box-shadow: 0 12px 30px rgba(0,0,0,0.35);
-  z-index: 50;
+  background: var(--bg-panel);         /* ✅ corect */
+  border: 1px solid var(--border-soft);/* ✅ corect */
+  box-shadow: var(--shadow-strong);    /* ✅ corect (dark/light) */
+  z-index: 60;
 }
 
 .phoneItem{
-  display: block;
-  padding: 10px 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 10px 12px;
   border-radius: 10px;
+
   text-decoration: none;
-  color: inherit;
+  color: var(--text-main);             /* ✅ fix principal: text vizibil */
+  font-weight: 800;
+
+  transition: background-color .15s ease;
 }
 
 .phoneItem:hover{
-  background: rgba(255,255,255,0.06);
+  background: var(--bg-card);          /* ✅ hover consistent */
+}
+
+.phoneItem:active{
+  background: var(--bg-soft);
+}
+
+.phoneItem:focus-visible{
+  outline: 2px solid color-mix(in srgb, var(--accent) 40%, transparent);
+  outline-offset: 2px;
 }
 
 /* =========================

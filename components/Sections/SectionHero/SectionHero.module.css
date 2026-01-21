@@ -402,3 +402,145 @@ html[data-theme="light"] .locationLink{
 html[data-theme="light"] .heroArt{
   opacity: 0.55;
 }
+.offerBanner{
+  margin-top: 14px;
+  padding: 12px 12px;
+  border-radius: 16px;
+
+  display:flex;
+  align-items:center;
+  gap: 12px;
+
+  border: 1px solid color-mix(in srgb, var(--accent) 28%, var(--border-soft));
+  background:
+    radial-gradient(900px 120px at 15% 0%, color-mix(in srgb, var(--accent) 22%, transparent), transparent 60%),
+    var(--bg-soft);
+
+  box-shadow: var(--shadow-soft);
+}
+
+.offerIcon{
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+  display:grid;
+  place-items:center;
+
+  background: color-mix(in srgb, var(--accent) 18%, var(--bg-card));
+  border: 1px solid color-mix(in srgb, var(--accent) 22%, var(--border-soft));
+  flex: 0 0 auto;
+}
+
+.offerText{ flex:1; min-width: 0; }
+
+.offerTitle{
+  font-weight: 950;
+  color: var(--text-main);
+  line-height: 1.2;
+}
+
+.offerSub{
+  margin-top: 3px;
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.35;
+}
+
+.offerChip{
+  flex: 0 0 auto;
+  padding: 8px 10px;
+  border-radius: 999px;
+
+  font-size: 12px;
+  font-weight: 950;
+  letter-spacing: .2px;
+
+  background: color-mix(in srgb, var(--accent) 22%, var(--bg-card));
+  border: 1px solid color-mix(in srgb, var(--accent) 30%, var(--border-soft));
+  color: var(--text-main);
+}
+/* permite depășirea */
+.offerBanner,
+.offerText{
+  overflow: visible;
+}
+/* toate cuvintele care pulsează */
+.wordAuto,
+.wordTruck,
+.wordNew,
+.wordSh{
+  position: relative;
+  display: inline-block;
+  z-index: 20;
+  font-weight: 950;
+  will-change: transform, filter, text-shadow;
+}
+
+/* culori */
+.wordAuto,
+.wordNew{
+  color: var(--accent);
+}
+
+.wordTruck,
+.wordSh{
+  color: var(--info);
+}
+
+/* animație FĂRĂ chenar */
+@keyframes wordPulseBig {
+  0%{
+    transform: scale(1);
+    filter: saturate(1);
+    text-shadow: none;
+  }
+  45%{
+    transform: scale(1.7); /* 🔥 mare */
+    filter: saturate(1.4);
+    text-shadow:
+      0 0 18px color-mix(in srgb, currentColor 35%, transparent),
+      0 0 40px color-mix(in srgb, currentColor 25%, transparent);
+  }
+  100%{
+    transform: scale(1);
+    filter: saturate(1);
+    text-shadow: none;
+  }
+}
+
+/* secvență */
+.wordAuto{
+  animation: wordPulseBig 1.8s ease-in-out infinite;
+}
+
+.wordTruck{
+  animation: wordPulseBig 1.8s ease-in-out infinite;
+  animation-delay: .9s;
+}
+
+.wordNew{
+  animation: wordPulseBig 1.8s ease-in-out infinite;
+  animation-delay: 1.8s;
+}
+
+.wordSh{
+  animation: wordPulseBig 1.8s ease-in-out infinite;
+  animation-delay: 2.7s;
+}
+
+/* mobile – mai domol */
+@media (max-width: 560px){
+  @keyframes wordPulseBig {
+    45%{ transform: scale(1.35); }
+  }
+}
+
+/* accesibilitate */
+@media (prefers-reduced-motion: reduce){
+  .wordAuto,
+  .wordTruck,
+  .wordNew,
+  .wordSh{
+    animation: none;
+  }
+}

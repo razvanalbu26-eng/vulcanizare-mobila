@@ -58,6 +58,26 @@ export default function SectionHero() {
             Pentru <strong>camioane / TIR</strong> venim în parcare, pe acostament sau la punctul tău.
             Cel mai simplu: apasă WhatsApp și trimite locația sau sună direct.
           </p>
+<div className={styles.offerBanner} role="note" aria-label="Serviciu nou">
+  <span className={styles.offerIcon} aria-hidden="true">🛞</span>
+
+  <div className={styles.offerText}>
+    <div className={styles.offerTitle}>
+      Înlocuire anvelope la fața locului pentru{" "}
+      <span className={styles.wordAuto}>autoturisme</span> și{" "}
+      <span className={styles.wordTruck}>camioane</span>
+    </div>
+
+    <div className={styles.offerSub}>
+      Anvelope{" "}
+      <span className={styles.wordNew}>noi</span> și{" "}
+      <span className={styles.wordSh}>SH</span>
+      {" "}• orice dimensiune din stoc • montaj rapid
+    </div>
+  </div>
+
+  <span className={styles.offerChip}>NOU</span>
+</div>
 
           {/* Wrapper pentru a micșora CTAButtons doar în hero */}
           <div className={styles.ctaWrap}>

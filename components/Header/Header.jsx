@@ -208,55 +208,32 @@ export default function HeaderClient() {
               📞
             </button>
 
-            {phoneMenuOpen && (
-              <div
-                role="menu"
-                aria-label="Alege numărul de telefon"
-                style={{
-                  position: "absolute",
-                  right: 0,
-                  top: "calc(100% + 8px)",
-                  minWidth: 180,
-                  padding: 8,
-                  borderRadius: 12,
-                  background: "var(--panel, #111)",
-                  border: "1px solid rgba(255,255,255,0.12)",
-                  boxShadow: "0 12px 30px rgba(0,0,0,0.35)",
-                  zIndex: 50,
-                }}
-              >
-                <a
-                  role="menuitem"
-                  href={`tel:${SITE.phone1}`}
-                  onClick={() => setPhoneMenuOpen(false)}
-                  style={{
-                    display: "block",
-                    padding: "10px 10px",
-                    borderRadius: 10,
-                    textDecoration: "none",
-                    color: "inherit",
-                  }}
-                >
-                  📞 {SITE.phone1}
-                </a>
+           {phoneMenuOpen && (
+  <div
+    role="menu"
+    aria-label="Alege numărul de telefon"
+    className={styles.phoneMenu}
+  >
+    <a
+      role="menuitem"
+      href={`tel:${SITE.phone1}`}
+      onClick={() => setPhoneMenuOpen(false)}
+      className={styles.phoneItem}
+    >
+      📞 {SITE.phone1}
+    </a>
 
-                <a
-                  role="menuitem"
-                  href={`tel:${SITE.phone2}`}
-                  onClick={() => setPhoneMenuOpen(false)}
-                  style={{
-                    display: "block",
-                    padding: "10px 10px",
-                    borderRadius: 10,
-                    textDecoration: "none",
-                    color: "inherit",
-                    marginTop: 4,
-                  }}
-                >
-                  📞 {SITE.phone2}
-                </a>
-              </div>
-            )}
+    <a
+      role="menuitem"
+      href={`tel:${SITE.phone2}`}
+      onClick={() => setPhoneMenuOpen(false)}
+      className={styles.phoneItem}
+    >
+      📞 {SITE.phone2}
+    </a>
+  </div>
+)}
+
           </div>
 
           {/* 📍 WhatsApp cu locație */}

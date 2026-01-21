@@ -320,7 +320,6 @@
   position: relative;
   width: 100%;
 }
-
 .phoneMenu{
   position: absolute;
   right: 0;
@@ -328,9 +327,13 @@
   min-width: 220px;
   padding: 8px;
   border-radius: 12px;
-  background: var(--panel, #111);
-  border: 1px solid rgba(255,255,255,0.12);
-  box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+
+  background: var(--bg-panel);           /* ✅ folosește variabila ta */
+  color: var(--text-main);              /* ✅ text corect în ambele teme */
+  border: 1px solid var(--border-soft); /* ✅ bordură corectă pe light */
+  box-shadow: var(--shadow-soft);       /* ✅ shadow corect pe light/dark */
+
+  backdrop-filter: blur(10px);
   z-index: 50;
 }
 
@@ -339,11 +342,11 @@
   padding: 10px 10px;
   border-radius: 10px;
   text-decoration: none;
-  color: inherit;
+  color: var(--text-main);
 }
 
 .phoneItem:hover{
-  background: color-mix(in srgb, #ffffff 6%, transparent);
+  background: color-mix(in srgb, var(--text-main) 6%, transparent); /* ✅ hover adaptiv */
 }
 
 /* MOBILE */
@@ -469,4 +472,21 @@
     font-size: 13.5px;
     padding: 11px 12px;
   }
+}
+/* ✅ forțează dropdown-ul nativ să arate corect pe dark/light */
+select.input{
+  background: var(--bg-panel);
+  color: var(--text-main);
+  border: 1px solid var(--border-soft);
+  color-scheme: inherit; /* ajută Chrome/Edge să aplice tema corect */
+}
+
+select.input option{
+  background-color: var(--bg-panel);
+  color: var(--text-main);
+}
+
+/* (opțional) dacă vezi că hover/selected e prea “gri” în dark */
+select.input option:checked{
+  background-color: color-mix(in srgb, var(--text-main) 12%, var(--bg-panel));
 }
