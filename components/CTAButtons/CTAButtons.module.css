@@ -5,18 +5,24 @@
   margin-top:14px;
 }
 
+/* wrapper pentru popover: IMPORTANT să fie full width */
+.phoneWrap{
+  position: relative;
+  width: 100%;
+}
+
 /* =========================
    CTA PRINCIPAL
 ========================= */
 .primary{
-  /* ✅ accent din theme */
+  width: 100%;              /* ✅ păstrează mărimea ca înainte */
+
   background: linear-gradient(
     135deg,
     color-mix(in srgb, var(--accent) 92%, #ffffff 8%),
     color-mix(in srgb, var(--accent) 72%, #000000 28%)
   );
 
-  /* text închis pe buton verde */
   color: rgba(0,0,0,0.82);
 
   border-radius:18px;
@@ -38,6 +44,10 @@
     inset 0 0 0 1px rgba(255,255,255,.16);
 
   transition: transform .08s ease, box-shadow .18s ease, filter .18s ease;
+
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
 }
 
 /* text mic sub titlu */
@@ -45,6 +55,36 @@
   font-size:12px;
   font-weight:700;
   opacity:.86;
+}
+
+/* =========================
+   POPOVER TELEFON
+========================= */
+.phoneMenu{
+  position: absolute;
+  left: 0;
+  right: 0;                /* ✅ aceeași lățime ca butonul */
+  top: calc(100% + 8px);
+
+  padding: 8px;
+  border-radius: 12px;
+
+  background: var(--panel, #111);
+  border: 1px solid rgba(255,255,255,0.12);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+  z-index: 50;
+}
+
+.phoneItem{
+  display: block;
+  padding: 10px 10px;
+  border-radius: 10px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.phoneItem:hover{
+  background: rgba(255,255,255,0.06);
 }
 
 /* =========================
@@ -134,9 +174,12 @@
 @media (min-width: 768px){
   .wrap{ flex-direction:row; }
 
-  .primary{ flex:1.3; }
-  .secondary{ flex:1; }
+  /* înainte era .primary{flex:1.3}. Acum wrapper-ul e flex item */
+  .phoneWrap{ flex: 1.3; }
+  .secondary{ flex: 1; }
+}
 
+@media (min-width: 768px){
   .primary{
     animation: pulse 2.2s infinite;
   }
@@ -166,7 +209,9 @@
     border-radius: 14px;
     padding: 12px;
     font-size: 16px;
-    animation: none; /* mai calm pe mobile */
+
+    /* ✅ pulse pe mobil – mai calm */
+    animation: pulseMobile 1.2s infinite;
   }
 
   .sub{ font-size: 11px; }
@@ -185,3 +230,15 @@
     font-size: 13px;
   }
 }
+@keyframes pulseMobile{
+  0%{
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 28%, transparent);
+  }
+  70%{
+    box-shadow: 0 0 0 10px color-mix(in srgb, var(--accent) 0%, transparent);
+  }
+  100%{
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 0%, transparent);
+  }
+}
+
