@@ -1,384 +1,404 @@
-.wrap{
+.section{
+  position: relative;
+  padding: 28px 14px 18px;
+}
+
+.container{
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* Fundal pe variabile globale */
+.bg{
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+
+  background:
+    radial-gradient(900px 500px at 20% 10%, var(--accent-soft), transparent 60%),
+    radial-gradient(700px 420px at 80% 30%, rgba(74,163,255,0.14), transparent 65%),
+    radial-gradient(700px 600px at 50% 110%, rgba(74,163,255,0.10), transparent 60%);
+}
+
+/* Card (light/dark friendly) */
+.card{
+  position: relative;
+  z-index: 1;
+  border-radius: 20px;
+  padding: 18px;
+
+  background: var(--bg-soft);
+  border: 1px solid var(--border-soft);
+  box-shadow: 0 18px 60px rgba(0,0,0,0.18);
+
+  overflow: hidden;
+  backdrop-filter: blur(12px);
+}
+
+/* border gradient subtil */
+.card::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius: inherit;
+  padding:1px;
+  background: linear-gradient(
+    135deg,
+    var(--accent-soft),
+    rgba(74,163,255,.10),
+    rgba(255,80,140,.10)
+  );
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events:none;
+}
+
+/* light tweaks */
+[data-theme="light"] .card{
+  box-shadow: 0 18px 50px rgba(0,0,0,0.10);
+}
+
+/* =========================
+   ANIMAȚIE EVIDENTĂ (din laterale)
+========================= */
+.enter{
+  animation: heroInLeft .75s cubic-bezier(.2,.9,.2,1) both;
+  will-change: transform, opacity;
+}
+
+@keyframes heroInLeft{
+  from{ opacity: 0; transform: translateX(-120vw); }
+  to{ opacity: 1; transform: translateX(0); }
+}
+
+.heroArt{
+  position: absolute;
+  right: -40px;
+  top: -40px;
+  width: 260px;
+  height: 260px;
+  pointer-events: none;
+  opacity: 0.8;
+
+  animation: heroInRight .95s cubic-bezier(.2,.9,.2,1) .08s both;
+  will-change: transform, opacity;
+}
+
+@keyframes heroInRight{
+  from{ opacity: 0; transform: translateX(120vw) rotate(-4deg); }
+  to{ opacity: .8; transform: translateX(0) rotate(0deg); }
+}
+
+/* mini-cards stagger */
+.miniCard{
+  animation: cardPop .5s ease-out both;
+}
+
+.miniCard:nth-child(1){ animation-delay: .14s; }
+.miniCard:nth-child(2){ animation-delay: .20s; }
+.miniCard:nth-child(3){ animation-delay: .26s; }
+.miniCard:nth-child(4){ animation-delay: .32s; }
+
+@keyframes cardPop{
+  from{ opacity: 0; transform: translateY(12px); }
+  to{ opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .enter, .heroArt, .miniCard{ animation: none !important; }
+}
+
+/* =========================
+   TOP ROW
+========================= */
+.topRow{
   display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.head{
-  display:flex;
-  align-items:flex-start;
-  justify-content:space-between;
-  gap:12px;
+  gap: 8px;
   flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 8px;
 }
 
-.title{
-  font-weight: 900;
-  font-size: 18px;
-  letter-spacing: -0.2px;
+.badge{
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  font-size: 12px;
+  padding: 7px 10px;
+  border-radius: 999px;
+
+  background: var(--bg-card);
+  border: 1px solid var(--border-soft);
+  color: var(--text-main);
+  letter-spacing: 0.2px;
+}
+
+.pill{
+  font-size: 12px;
+  padding: 6px 10px;
+  border-radius: 999px;
+
+  background: var(--bg-card);
+  border: 1px solid var(--border-soft);
   color: var(--text-main);
 }
 
-.sub{
-  margin-top: 4px;
-  font-size: 13px;
-  color: var(--text-muted);
-  max-width: 70ch;
-}
-
-.actions{
-  display:flex;
-  gap:10px;
-  flex-wrap: wrap;
-}
-
-.btnPrimary,
-.btnGhost{
-  border-radius: 12px;
-  padding: 10px 12px;
-  font-weight: 900;
-  font-size: 13px;
-  text-decoration: none;
-  user-select:none;
-  -webkit-tap-highlight-color: transparent;
-  border: 1px solid var(--border-soft);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  transition: transform .06s ease, border-color .15s ease, background-color .15s ease, box-shadow .15s ease;
-}
-
-.btnPrimary{
+.pillTruck{
   background: var(--accent-soft);
   border-color: var(--border-strong);
   color: var(--text-main);
-  box-shadow: 0 10px 24px rgba(0,0,0,.15);
+  font-weight: 900;
 }
 
-.btnPrimary:disabled{
-  opacity: .65;
-  cursor: not-allowed;
-  box-shadow: none;
-}
-
-.btnGhost{
-  background: var(--bg-soft);
-  color: var(--text-main);
-}
-
-.btnPrimary:hover,
-.btnGhost:hover{
-  border-color: var(--border-strong);
-}
-
-.btnPrimary:active,
-.btnGhost:active{
-  transform: scale(.98);
-}
-
-.btnPrimary:focus-visible,
-.btnGhost:focus-visible{
-  outline: 2px solid color-mix(in srgb, var(--accent) 45%, transparent);
-  outline-offset: 2px;
-}
-
-.map{
-  border-radius: 16px;
-  overflow: hidden;
-  border: 1px solid var(--border-soft);
-  background: var(--bg-card);
-}
-
-/* ✅ o singură definiție pentru leaflet */
-.leaflet{
-  width: 100%;
-  height: 360px;
-  border-radius: 12px;
-  overflow: hidden;
-  position: relative;
-}
+/* status hint */
+.green{ border-color: rgba(39,209,127,0.40); }
+.red{ border-color: rgba(255,80,140,0.35); }
+.gray{ color: var(--text-muted); }
 
 /* =========================
-   ✅ LEAFLET ZOOM CONTROLS (PREMIUM)
-   CSS Modules -> :global(...)
+   TEXT
 ========================= */
-
-/* container-ul zoom */
-.leaflet :global(.leaflet-control-zoom){
-  border: 0;
-  box-shadow: none;
-  margin: 14px !important;
-}
-
-/* grupul (+ / -) ca “pill” */
-.leaflet :global(.leaflet-control-zoom.leaflet-bar){
-  border: 1px solid rgba(255,255,255,0.12);
-  background: color-mix(in srgb, var(--bg-card) 82%, transparent);
-  backdrop-filter: blur(10px);
-  border-radius: 14px;
-  overflow: hidden;
-  box-shadow: 0 14px 32px rgba(0,0,0,0.35);
-}
-
-/* butoane + / - */
-.leaflet :global(.leaflet-control-zoom a){
-  width: 44px;
-  height: 44px;
-  line-height: 44px;
-  text-align: center;
-
-  border: 0;
-  background: transparent;
-  color: var(--text-main);
-
-  font-weight: 950;
-  font-size: 18px;
-
-  transition: transform .06s ease, background-color .15s ease, color .15s ease;
-}
-
-/* separator frumos între ele */
-.leaflet :global(.leaflet-control-zoom a + a){
-  border-top: 1px solid rgba(255,255,255,0.10);
-}
-
-/* hover */
-.leaflet :global(.leaflet-control-zoom a:hover){
-  background: color-mix(in srgb, #ffffff 6%, transparent);
-}
-
-/* click */
-.leaflet :global(.leaflet-control-zoom a:active){
-  transform: scale(.98);
-}
-
-/* focus keyboard */
-.leaflet :global(.leaflet-control-zoom a:focus-visible){
-  outline: none;
-  box-shadow: inset 0 0 0 3px color-mix(in srgb, var(--accent) 40%, transparent);
-}
-
-/* starea disabled (când e la min/max zoom) */
-.leaflet :global(.leaflet-control-zoom a.leaflet-disabled){
-  opacity: 0.45;
-  cursor: not-allowed;
-  background: transparent;
-}
-
-/* remove underline default */
-.leaflet :global(.leaflet-control-zoom a),
-.leaflet :global(.leaflet-control-zoom a:hover){
-  text-decoration: none;
-}
-
-/* opțional: mic “shine” */
-.leaflet :global(.leaflet-control-zoom.leaflet-bar)::before{
-  content:"";
-  position:absolute;
-  inset: 0;
-  pointer-events:none;
-  background: linear-gradient(
-    180deg,
-    rgba(255,255,255,0.10),
-    rgba(255,255,255,0.00) 55%
-  );
-}
-
-/* =========================
-   ✅ Leaflet popup tweaks (optional)
-   (arata mai “curat” dacă folosești popups)
-========================= */
-
-.leaflet :global(.leaflet-popup-content-wrapper){
-  border-radius: 14px;
-  background: color-mix(in srgb, var(--bg-card) 90%, transparent);
-  border: 1px solid rgba(255,255,255,0.10);
-  backdrop-filter: blur(10px);
-  color: var(--text-main);
-  box-shadow: 0 16px 40px rgba(0,0,0,0.45);
-}
-
-.leaflet :global(.leaflet-popup-tip){
-  background: color-mix(in srgb, var(--bg-card) 90%, transparent);
-}
-
-.err{
-  padding: 12px;
-  border-radius: 14px;
-  border: 1px solid var(--border-soft);
-  background: var(--bg-soft);
-  color: var(--text-main);
-  font-size: 13px;
-}
-
-.infoRow{
-  display:grid;
-  grid-template-columns: 1fr;
-  gap: 10px;
-}
-
-.box{
-  border-radius: 14px;
-  padding: 12px;
-  border: 1px solid var(--border-soft);
-  background: var(--bg-card);
-  min-width: 0;
-}
-
-.k{
+.eyebrow{
   font-size: 12px;
   color: var(--text-muted);
-  margin-bottom: 4px;
+  margin: 6px 0 6px;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
 }
 
-.v{
+.dot{ opacity: 0.6; margin: 0 6px; }
+
+.locationLine{
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+  margin: 0 0 10px;
+
   font-size: 13px;
+  color: var(--text-muted);
+}
+
+.locationIcon{ font-size: 14px; }
+
+.locationLink{
+  color: var(--info);
+  text-decoration: none;
+  font-weight: 800;
+}
+
+.locationLink:hover{ text-decoration: underline; }
+
+.h1{
+  font-size: 32px;
+  line-height: 1.08;
+  margin: 0 0 10px;
+  letter-spacing: -0.6px;
   color: var(--text-main);
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+}
+
+.accent{ color: var(--accent); }
+.accent2{ color: var(--info); }
+
+.p{
+  margin: 0 0 12px;
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--text-main);
+  max-width: 62ch;
 }
 
 /* =========================
-   DESKTOP
+   CTAButtons smaller (only in hero)
+========================= */
+.ctaWrap{
+  margin-top: 6px;
+}
+
+.ctaWrap :is(a, button){
+  font-size: 13px;
+  padding: 10px 12px;
+  border-radius: 12px;
+}
+
+/* =========================
+   MINI GRID (smaller)
+========================= */
+.miniGrid{
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.miniCard{
+  border-radius: 14px;
+  padding: 10px;
+  border: 1px solid var(--border-soft);
+  background: var(--bg-card);
+}
+
+.miniCardHighlight{
+  border-color: var(--border-strong);
+  box-shadow: 0 0 0 1px var(--accent-soft);
+}
+
+.miniTitle{
+  font-weight: 900;
+  font-size: 13px;
+  margin-bottom: 4px;
+  color: var(--text-main);
+}
+
+.small{
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* =========================
+   HERO ART
+========================= */
+.mapShape{
+  position: absolute;
+  inset: 0;
+  border-radius: 28px;
+  border: 2px solid var(--border-strong);
+  background:
+    radial-gradient(100px 80px at 30% 30%, var(--accent-soft), transparent 60%),
+    radial-gradient(120px 90px at 70% 60%, rgba(74,163,255,0.14), transparent 60%),
+    transparent;
+  transform: rotate(8deg);
+}
+
+.route{
+  position: absolute;
+  left: 34px;
+  top: 120px;
+  width: 200px;
+  height: 10px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(74,163,255,0.0), rgba(74,163,255,0.85), rgba(74,163,255,0.0));
+  transform: rotate(-22deg);
+  opacity: 0.9;
+}
+
+.glowOrb{
+  position: absolute;
+  left: 18px;
+  bottom: 22px;
+  width: 42px;
+  height: 42px;
+  border-radius: 999px;
+  background: radial-gradient(circle at 30% 30%, var(--accent), transparent 70%);
+  opacity: 0.55;
+}
+
+/* =========================
+   RESPONSIVE
 ========================= */
 @media (min-width: 720px){
-  .leaflet{ height: 420px; }
-  .infoRow{ grid-template-columns: repeat(3, 1fr); }
-}
+  .section{ padding: 44px 18px 26px; }
+  .card{ padding: 26px; }
+  .h1{ font-size: 44px; }
+  .miniGrid{ grid-template-columns: repeat(3, 1fr); }
+  .heroArt{ width: 320px; height: 320px; right: -60px; top: -60px; }
 
-/* =========================
-   MOBILE (compact + usable)
-========================= */
-@media (max-width: 720px) {
-  .wrap{ gap: 10px; }
-  .head{ gap: 10px; }
-
-  .title{
-    font-size: 16px;
-    line-height: 1.15;
-  }
-
-  .sub{
-    font-size: 12.5px;
-    max-width: 100%;
-  }
-
-  /* Actions full width */
-  .actions{
-    width: 100%;
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 10px;
-  }
-
-  .btnPrimary,
-  .btnGhost{
-    width: 100%;
-    padding: 11px 12px;
-    border-radius: 14px;
+  /* CTA a bit bigger on desktop but still compact */
+  .ctaWrap :is(a, button){
     font-size: 14px;
-  }
-
-  .map{ border-radius: 14px; }
-
-  /* Hartă: “cât trebuie” pe mobil */
-  .leaflet{
-    height: min(54vh, 360px);
-    border-radius: 14px;
-  }
-
-  /* Zoom buttons a bit smaller on mobile */
-  .leaflet :global(.leaflet-control-zoom a){
-    width: 42px;
-    height: 42px;
-    line-height: 42px;
-    font-size: 18px;
-  }
-
-  .err{
-    padding: 10px 12px;
-    border-radius: 12px;
-    font-size: 12.5px;
-  }
-
-  /* Info: 2 coloane + ETA pe full width */
-  .infoRow{
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-  }
-
-  .box{
-    padding: 10px 12px;
-    border-radius: 14px;
-  }
-
-  .k{
-    font-size: 11.5px;
-    margin-bottom: 4px;
-  }
-
-  /* coordonate pe mai multe linii */
-  .v{
-    font-size: 12.5px;
-    white-space: normal;
-    overflow: visible;
-    text-overflow: clip;
-    line-height: 1.25;
-    word-break: break-word;
-  }
-
-  .infoRow > .box:nth-child(3){
-    grid-column: 1 / -1;
-  }
-}
-
-/* Extra-small phones */
-@media (max-width: 420px) {
-  .title{ font-size: 15.5px; }
-  .sub{ font-size: 12px; }
-
-  .btnPrimary,
-  .btnGhost{
-    padding: 10px 12px;
-    font-size: 13.5px;
+    padding: 11px 14px;
     border-radius: 13px;
   }
+}
 
-  .leaflet{
-    height: min(52vh, 320px);
+@media (max-width: 420px){
+  /* mai compact pe mobil */
+  .section{ padding: 14px 10px 10px; }
+  .card{ border-radius: 14px; padding: 12px; }
+
+  .topRow{ gap: 6px; margin-bottom: 6px; }
+  .badge{ font-size: 10.5px; padding: 5px 7px; gap: 6px; }
+  .pill{ font-size: 10.5px; padding: 5px 7px; }
+
+  .eyebrow{ font-size: 10.5px; margin: 4px 0 6px; }
+  .locationLine{ font-size: 11.5px; margin: 0 0 8px; }
+
+  .h1{ font-size: 24px; line-height: 1.10; margin: 0 0 8px; letter-spacing: -0.4px; }
+  .p{ font-size: 13.5px; line-height: 1.48; margin: 0 0 10px; }
+
+  .ctaWrap :is(a, button){
+    font-size: 12.5px;
+    padding: 9px 10px;
+    border-radius: 11px;
   }
 
-  .box{
-    padding: 10px;
-    border-radius: 13px;
+  .miniGrid{ gap: 7px; margin-top: 10px; }
+  .miniCard{ border-radius: 12px; padding: 9px; }
+  .miniTitle{ font-size: 12.5px; margin-bottom: 4px; }
+  .small{ font-size: 11.5px; }
+
+  .heroArt{
+    width: 210px;
+    height: 210px;
+    right: -70px;
+    top: -70px;
+    opacity: 0.40;
   }
 
-  .v{
-    font-size: 12.25px;
-  }
+  .route{ width: 160px; left: 28px; top: 105px; }
+  .glowOrb{ width: 34px; height: 34px; left: 16px; bottom: 18px; }
 }
-/* container-ul zoom: complet transparent */
-.leaflet :global(.leaflet-control-zoom.leaflet-bar){
-  background: transparent !important;
-  backdrop-filter: none !important;
-  box-shadow: none !important;
-  border: 1px solid rgba(255,255,255,0.16); /* păstrăm contur fin */
-}
-
-/* butoanele + / -: complet transparent */
-.leaflet :global(.leaflet-control-zoom a){
-  background: transparent !important;
+/* =========================
+   LIGHT THEME TWEAKS (Hero)
+========================= */
+html[data-theme="light"] .bg{
+  /* pe light, radialurile trebuie “mai fine” ca să nu pară murdare */
+  background:
+    radial-gradient(900px 520px at 20% 10%, rgba(22,163,74,0.14), transparent 62%),
+    radial-gradient(760px 460px at 82% 28%, rgba(37,99,235,0.10), transparent 66%),
+    radial-gradient(820px 640px at 50% 115%, rgba(37,99,235,0.07), transparent 62%);
 }
 
-/* hover: tot transparent (doar un mic “highlight” pe border) */
-.leaflet :global(.leaflet-control-zoom a:hover){
-  background: transparent !important;
+html[data-theme="light"] .card{
+  /* cardul să fie alb “curat”, cu shadow corect */
+  background: rgba(255,255,255,0.88);
+  border-color: rgba(15,23,42,0.10);
+  box-shadow: var(--shadow-soft, 0 18px 50px rgba(2,6,23,0.10));
+  backdrop-filter: blur(10px);
 }
 
-/* opțional: un mic focus ring fără background */
-.leaflet :global(.leaflet-control-zoom a:focus-visible){
-  outline: none;
-  box-shadow: inset 0 0 0 3px color-mix(in srgb, var(--accent) 40%, transparent);
+/* gradient border mai discret în light */
+html[data-theme="light"] .card::before{
+  background: linear-gradient(
+    135deg,
+    rgba(22,163,74,.18),
+    rgba(37,99,235,.10),
+    rgba(255,80,140,.08)
+  );
+  opacity: .9;
+}
+
+/* badge/pill mai “crisp” */
+html[data-theme="light"] .badge,
+html[data-theme="light"] .pill,
+html[data-theme="light"] .miniCard{
+  background: rgba(255,255,255,0.92);
+  border-color: rgba(15,23,42,0.10);
+}
+
+/* truck pill să arate ca highlight, nu ca pată */
+html[data-theme="light"] .pillTruck{
+  background: rgba(22,163,74,.12);
+  border-color: rgba(22,163,74,.25);
+  color: rgba(15,23,42,0.92);
+}
+
+/* location link să fie lizibil */
+html[data-theme="light"] .locationLink{
+  color: rgba(37,99,235,0.98);
+}
+
+/* heroArt să nu fie prea agresiv pe alb */
+html[data-theme="light"] .heroArt{
+  opacity: 0.55;
 }
