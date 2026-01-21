@@ -5,6 +5,8 @@ import styles from "./Header.module.css";
 import { SITE } from "../../lib/config.js";
 import BurgerMenu from "../BurgerMenu/BurgerMenu.jsx";
 
+/* ================= WHATSAPP HELPERS ================= */
+
 function buildWhatsAppText({ lat, lng } = {}) {
   const parts = [
     "Bună! Am nevoie de vulcanizare mobilă.",
@@ -20,28 +22,30 @@ function buildWhatsAppText({ lat, lng } = {}) {
   return parts.join("\n");
 }
 
-function openWhatsApp({ waPhone, lat, lng } = {}) {
-  if (!waPhone) return;
+function buildWhatsAppUrl({ waPhone, lat, lng } = {}) {
+  if (!waPhone) return null;
   const text = buildWhatsAppText({ lat, lng });
-  const url = `https://wa.me/${waPhone}?text=${encodeURIComponent(text)}`;
-  window.open(url, "_blank", "noopener,noreferrer");
+  return `https://wa.me/${waPhone}?text=${encodeURIComponent(text)}`;
 }
+
+/* ================= COMPONENT ================= */
 
 export default function HeaderClient() {
   const [gpsLoading, setGpsLoading] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
-  // ✅ pentru popover-ul de telefoane
+  // popover telefoane
   const [phoneMenuOpen, setPhoneMenuOpen] = useState(false);
   const phoneWrapRef = useRef(null);
 
-  // ✅ WhatsApp: folosește un singur număr (SITE.whatsappPhone)
+  // WhatsApp number
   const waPhone = useMemo(() => {
     const raw = SITE?.whatsappPhone ?? "";
     return String(raw).replace(/[^\d]/g, "");
   }, []);
 
-  /* ================= THEME (fără setState în effect) ================= */
+  /* ================= THEME ================= */
+
   const getInitialTheme = () => {
     if (typeof window === "undefined") return "dark";
 
@@ -64,15 +68,18 @@ export default function HeaderClient() {
     setTheme((t) => (t === "dark" ? "light" : "dark"));
   };
 
-  /* ================= PHONE MENU (click outside) ================= */
+  /* ================= CLICK OUTSIDE (PHONE MENU) ================= */
+
   useEffect(() => {
     const onDocDown = (e) => {
       if (!phoneMenuOpen) return;
       const wrap = phoneWrapRef.current;
       if (wrap && !wrap.contains(e.target)) setPhoneMenuOpen(false);
     };
+
     document.addEventListener("mousedown", onDocDown);
     document.addEventListener("touchstart", onDocDown);
+
     return () => {
       document.removeEventListener("mousedown", onDocDown);
       document.removeEventListener("touchstart", onDocDown);
@@ -80,24 +87,35 @@ export default function HeaderClient() {
   }, [phoneMenuOpen]);
 
   /* ================= ACTIONS ================= */
+
+  // 💬 WhatsApp fără locație
   const onWhatsAppChat = () => {
-    // 💬 fără locație => WhatsApp pe numărul unic
     if (!waPhone) {
       window.location.href = `tel:${SITE?.phone2 ?? SITE?.phone1 ?? ""}`;
       return;
     }
-    openWhatsApp({ waPhone });
+
+    window.location.href = buildWhatsAppUrl({ waPhone });
   };
 
+  // 📍 WhatsApp cu locație (FIX popup blocking)
   const onWhatsAppWithLocation = () => {
-    // 📍 cu locație => WhatsApp pe numărul unic
     if (!waPhone) {
       window.location.href = `tel:${SITE?.phone2 ?? SITE?.phone1 ?? ""}`;
       return;
     }
 
+    // ✅ deschidere SINCRONĂ (altfel browserul blochează)
+    const popup = window.open("about:blank", "_blank", "noopener,noreferrer");
+
+    const navigate = (url) => {
+      if (!url) return;
+      if (popup) popup.location.href = url;
+      else window.location.href = url;
+    };
+
     if (!navigator.geolocation) {
-      openWhatsApp({ waPhone });
+      navigate(buildWhatsAppUrl({ waPhone }));
       return;
     }
 
@@ -108,17 +126,19 @@ export default function HeaderClient() {
       (pos) => {
         setGpsLoading(false);
         const { latitude, longitude } = pos.coords;
-        openWhatsApp({ waPhone, lat: latitude, lng: longitude });
+        navigate(buildWhatsAppUrl({ waPhone, lat: latitude, lng: longitude }));
       },
       () => {
         setGpsLoading(false);
-        openWhatsApp({ waPhone });
+        navigate(buildWhatsAppUrl({ waPhone }));
       },
       { enableHighAccuracy: true, timeout: 8000, maximumAge: 30000 }
     );
   };
 
   const onMenu = () => setMenuOpen((v) => !v);
+
+  /* ================= RENDER ================= */
 
   return (
     <header className={styles.header}>
@@ -134,7 +154,7 @@ export default function HeaderClient() {
 
         {/* RIGHT */}
         <div className={styles.right}>
-          {/* ✅ Telefon: la click arată ambele numere */}
+          {/* 📞 Telefon */}
           <div
             ref={phoneWrapRef}
             style={{ position: "relative", display: "inline-block" }}
@@ -143,10 +163,7 @@ export default function HeaderClient() {
               type="button"
               className={styles.iconBtn}
               onClick={() => setPhoneMenuOpen((v) => !v)}
-              aria-label="Apelează (alege numărul)"
-              title="Apelează"
-              aria-expanded={phoneMenuOpen}
-              aria-haspopup="menu"
+              aria-label="Apelează"
             >
               📞
             </button>
@@ -154,7 +171,6 @@ export default function HeaderClient() {
             {phoneMenuOpen && (
               <div
                 role="menu"
-                aria-label="Alege numărul de telefon"
                 style={{
                   position: "absolute",
                   right: 0,
@@ -172,13 +188,7 @@ export default function HeaderClient() {
                   role="menuitem"
                   href={`tel:${SITE.phone1}`}
                   onClick={() => setPhoneMenuOpen(false)}
-                  style={{
-                    display: "block",
-                    padding: "10px 10px",
-                    borderRadius: 10,
-                    textDecoration: "none",
-                    color: "inherit",
-                  }}
+                  style={{ display: "block", padding: 10 }}
                 >
                   📞 {SITE.phone1}
                 </a>
@@ -187,14 +197,7 @@ export default function HeaderClient() {
                   role="menuitem"
                   href={`tel:${SITE.phone2}`}
                   onClick={() => setPhoneMenuOpen(false)}
-                  style={{
-                    display: "block",
-                    padding: "10px 10px",
-                    borderRadius: 10,
-                    textDecoration: "none",
-                    color: "inherit",
-                    marginTop: 4,
-                  }}
+                  style={{ display: "block", padding: 10 }}
                 >
                   📞 {SITE.phone2}
                 </a>
@@ -202,49 +205,45 @@ export default function HeaderClient() {
             )}
           </div>
 
+          {/* 📍 WhatsApp cu locație */}
           <button
             type="button"
             className={styles.iconBtn}
             onClick={onWhatsAppWithLocation}
-            aria-label="Trimite locația pe WhatsApp"
-            title={gpsLoading ? "Se ia locația…" : "WhatsApp cu locație"}
             disabled={gpsLoading}
+            title={gpsLoading ? "Se ia locația…" : "WhatsApp cu locație"}
           >
             📍
           </button>
 
+          {/* 💬 WhatsApp */}
           <button
             type="button"
             className={styles.iconBtn}
             onClick={onWhatsAppChat}
-            aria-label="Deschide WhatsApp"
             title="WhatsApp"
           >
             💬
           </button>
 
+          {/* 🌗 Theme */}
           <button
             type="button"
             className={styles.iconBtn}
             onClick={toggleTheme}
-            aria-label="Schimbă tema"
-            title="Schimbă tema"
           >
             {theme === "dark" ? "☀️" : "🌙"}
           </button>
 
-          {/* BUTONUL ☰ */}
+          {/* ☰ Menu */}
           <button
             type="button"
             className={styles.menuBtn}
             onClick={onMenu}
-            aria-label="Meniu"
-            title="Meniu"
           >
             ☰
           </button>
 
-          {/* Panel-ul meniului (fără trigger-ul intern) */}
           <BurgerMenu open={menuOpen} onOpenChange={setMenuOpen} trigger="none" />
         </div>
       </div>
