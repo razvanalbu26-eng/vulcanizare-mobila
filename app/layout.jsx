@@ -9,8 +9,8 @@ export const metadata = {
   description:
     "Vulcanizare mobilă 24/7 – intervenție rapidă. Sună sau trimite locația pe WhatsApp.",
   icons: {
-    icon: "/favicon.ico",              // pentru browsere
-    apple: "/apple-touch-icon.png",    // pentru iPhone (Add to Home Screen)
+    icon: "/app/favicon.ico",              // pentru browsere
+    apple: "/app/favicon.ico",    // pentru iPhone (Add to Home Screen)
   },
 };
 
