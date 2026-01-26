@@ -63,7 +63,7 @@ export default function HomePage() {
               © {new Date().getFullYear()} {SITE.brand}. Toate drepturile rezervate.
             </div>
             <div className={styles.footerMeta}>
-              Intervenție: {SITE.area} · {SITE.baseLabel}
+              Intervenție: {SITE.serviceAreaLabel} · {SITE.baseLabel}
             </div>
           </div>
 
