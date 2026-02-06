@@ -74,6 +74,16 @@ export default function HomePage() {
             <a className={styles.footerLink} href="/confidentialitate">
               Politica de confidențialitate
             </a>
+            <a className={styles.footerLink} href="/vulcanizare-mobila-buzau">
+  Vulcanizare mobilă Buzău
+</a>
+<a className={styles.footerLink} href="/vulcanizare-mobila-a7">
+  Vulcanizare mobilă A7
+</a>
+<a className={styles.footerLink} href="/vulcanizare-camioane">
+  Vulcanizare camioane / TIR
+</a>
+
           </div>
         </div>
       </footer>
