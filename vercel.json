@@ -1,0 +1,10 @@
+{
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [{ "type": "host", "value": "www.vulcanizare-mobila-razvan.ro" }],
+      "destination": "https://vulcanizare-mobila-razvan.ro/$1",
+      "permanent": true
+    }
+  ]
+}
