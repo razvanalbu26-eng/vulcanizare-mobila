@@ -3,9 +3,10 @@ import { defaultMetadata } from "../../lib/seo";
 import CTAButtons from "../../components/CTAButtons/CTAButtons";
 import SectionFAQ from "../../components/Sections/SectionFaq";
 import SectionContact from "../../components/Sections/SectionContact";
+import { faqTirItems } from "../../lib/faqitems.js";
 
 export const metadata = defaultMetadata({
-  title: "Vulcanizare mobilă camioane / TIR – Non-stop | La Răzvan",
+  title: "Vulcanizare mobilă TIR / Camioane 24/7 – Intervenții la fața locului | La Răzvan",
   description:
     "Vulcanizare mobilă pentru camioane și TIR non-stop. Intervenții la fața locului: pană, schimb roată, înlocuire anvelope. Trimite locația pe WhatsApp.",
   path: "/vulcanizare-camioane",
@@ -28,7 +29,13 @@ export default function Page() {
           </div>
         </section>
 
-        <section className={styles.section}><SectionFAQ /></section>
+        <section className={styles.section}>
+          <SectionFAQ
+            title="Întrebări frecvente – Vulcanizare camioane / TIR"
+            items={faqTirItems}
+          />
+        </section>
+
         <section className={styles.section}><SectionContact /></section>
       </main>
     </div>

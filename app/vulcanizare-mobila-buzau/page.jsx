@@ -7,8 +7,10 @@ import SectionAssist from "../../components/Sections/SectionAssist";
 import SectionFAQ from "../../components/Sections/SectionFaq";
 import SectionContact from "../../components/Sections/SectionContact";
 
+import { faqBuzauItems } from "../../lib/faqitems.js";
+
 export const metadata = defaultMetadata({
-  title: "Vulcanizare mobilă Buzău – Intervenție rapidă 24/7 | La Răzvan",
+  title: "Vulcanizare mobilă Buzău 24/7 – Pană, schimb roată | La Răzvan",
   description:
     "Vulcanizare mobilă non-stop în Buzău și zonele limitrofe. Pană roată, schimb roată, anvelope noi & SH. Sună sau trimite locația pe WhatsApp.",
   path: "/vulcanizare-mobila-buzau",
@@ -43,7 +45,14 @@ export default function Page() {
 
         <section className={styles.section}><SectionServices /></section>
         <section className={styles.section}><SectionAssist /></section>
-        <section className={styles.section}><SectionFAQ /></section>
+
+        <section className={styles.section}>
+          <SectionFAQ
+            title="Întrebări frecvente – Vulcanizare mobilă Buzău"
+            items={faqBuzauItems}
+          />
+        </section>
+
         <section className={styles.section}><SectionContact /></section>
       </main>
     </div>
