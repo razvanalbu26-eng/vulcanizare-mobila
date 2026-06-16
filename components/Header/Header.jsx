@@ -5,6 +5,19 @@ import styles from "./Header.module.css";
 import { SITE } from "../../lib/config.js";
 import BurgerMenu from "../BurgerMenu/BurgerMenu.jsx";
 
+/* ================= GOOGLE ADS ================= */
+
+function trackPhoneConversion() {
+  if (typeof window === "undefined") return;
+  if (typeof window.gtag !== "function") return;
+
+  window.gtag("event", "conversion", {
+    send_to: "AW-17973794953/GI0gCK3tkMAcEImxyfpC",
+    value: 1.0,
+    currency: "RON",
+  });
+}
+
 /* ================= WHATSAPP HELPERS ================= */
 
 function buildWhatsAppText({ lat, lng } = {}) {
@@ -22,10 +35,6 @@ function buildWhatsAppText({ lat, lng } = {}) {
   return parts.join("\n");
 }
 
-/**
- * Încearcă să deschidă direct aplicația WhatsApp (pe mobil),
- * apoi face fallback la wa.me dacă nu merge (desktop / blocat / etc).
- */
 function openWhatsAppDirect({ waPhone, lat, lng } = {}) {
   if (!waPhone) return;
 
@@ -36,7 +45,6 @@ function openWhatsAppDirect({ waPhone, lat, lng } = {}) {
   )}`;
   const webUrl = `https://wa.me/${waPhone}?text=${encodeURIComponent(text)}`;
 
-  // Heuristic: pe desktop e inutil să încercăm whatsapp://
   const ua = typeof navigator !== "undefined" ? navigator.userAgent : "";
   const isMobile = /Android|iPhone|iPad|iPod/i.test(ua);
 
@@ -45,10 +53,8 @@ function openWhatsAppDirect({ waPhone, lat, lng } = {}) {
     return;
   }
 
-  // Încearcă aplicația
   window.location.href = appUrl;
 
-  // Fallback dacă nu se deschide aplicația
   const t = setTimeout(() => {
     window.location.href = webUrl;
   }, 900);
@@ -59,6 +65,7 @@ function openWhatsAppDirect({ waPhone, lat, lng } = {}) {
       document.removeEventListener("visibilitychange", onVis);
     }
   };
+
   document.addEventListener("visibilitychange", onVis);
 }
 
@@ -67,12 +74,9 @@ function openWhatsAppDirect({ waPhone, lat, lng } = {}) {
 export default function HeaderClient() {
   const [gpsLoading, setGpsLoading] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-
-  // popover telefoane
   const [phoneMenuOpen, setPhoneMenuOpen] = useState(false);
   const phoneWrapRef = useRef(null);
 
-  // WhatsApp number
   const waPhone = useMemo(() => {
     const raw = SITE?.whatsappPhone ?? "";
     return String(raw).replace(/[^\d]/g, "");
@@ -88,6 +92,7 @@ export default function HeaderClient() {
 
     const prefersLight =
       window.matchMedia?.("(prefers-color-scheme: light)")?.matches;
+
     return prefersLight ? "light" : "dark";
   };
 
@@ -102,13 +107,16 @@ export default function HeaderClient() {
     setTheme((t) => (t === "dark" ? "light" : "dark"));
   };
 
-  /* ================= CLICK OUTSIDE (PHONE MENU) ================= */
+  /* ================= CLICK OUTSIDE PHONE MENU ================= */
 
   useEffect(() => {
     const onDocDown = (e) => {
       if (!phoneMenuOpen) return;
+
       const wrap = phoneWrapRef.current;
-      if (wrap && !wrap.contains(e.target)) setPhoneMenuOpen(false);
+      if (wrap && !wrap.contains(e.target)) {
+        setPhoneMenuOpen(false);
+      }
     };
 
     document.addEventListener("mousedown", onDocDown);
@@ -122,9 +130,14 @@ export default function HeaderClient() {
 
   /* ================= ACTIONS ================= */
 
-  // 💬 WhatsApp fără locație (direct app + fallback)
+  const onPhoneClick = () => {
+    trackPhoneConversion();
+    setPhoneMenuOpen(false);
+  };
+
   const onWhatsAppChat = () => {
     if (!waPhone) {
+      trackPhoneConversion();
       window.location.href = `tel:${SITE?.phone2 ?? SITE?.phone1 ?? ""}`;
       return;
     }
@@ -132,15 +145,15 @@ export default function HeaderClient() {
     openWhatsAppDirect({ waPhone });
   };
 
-  // 📍 WhatsApp cu locație (direct app + fallback)
   const onWhatsAppWithLocation = () => {
     if (!waPhone) {
+      trackPhoneConversion();
       window.location.href = `tel:${SITE?.phone2 ?? SITE?.phone1 ?? ""}`;
       return;
     }
 
-    // opțional: confirmare înainte de prompt-ul browserului
     const ok = window.confirm("Vrei să trimiți locația ta pe WhatsApp?");
+
     if (!ok) {
       openWhatsAppDirect({ waPhone });
       return;
@@ -152,11 +165,13 @@ export default function HeaderClient() {
     }
 
     if (gpsLoading) return;
+
     setGpsLoading(true);
 
     navigator.geolocation.getCurrentPosition(
       (pos) => {
         setGpsLoading(false);
+
         const { latitude, longitude } = pos.coords;
 
         openWhatsAppDirect({
@@ -169,7 +184,11 @@ export default function HeaderClient() {
         setGpsLoading(false);
         openWhatsAppDirect({ waPhone });
       },
-      { enableHighAccuracy: true, timeout: 8000, maximumAge: 30000 }
+      {
+        enableHighAccuracy: true,
+        timeout: 8000,
+        maximumAge: 30000,
+      }
     );
   };
 
@@ -183,6 +202,7 @@ export default function HeaderClient() {
         {/* LEFT */}
         <div className={styles.brand}>
           <div className={styles.logo}>●</div>
+
           <div>
             <div className={styles.brandName}>{SITE.brand}</div>
             <div className={styles.brandSub}>{SITE.serviceAreaLabel}</div>
@@ -208,32 +228,31 @@ export default function HeaderClient() {
               📞
             </button>
 
-           {phoneMenuOpen && (
-  <div
-    role="menu"
-    aria-label="Alege numărul de telefon"
-    className={styles.phoneMenu}
-  >
-    <a
-      role="menuitem"
-      href={`tel:${SITE.phone1}`}
-      onClick={() => setPhoneMenuOpen(false)}
-      className={styles.phoneItem}
-    >
-      📞 {SITE.phone1}
-    </a>
+            {phoneMenuOpen && (
+              <div
+                role="menu"
+                aria-label="Alege numărul de telefon"
+                className={styles.phoneMenu}
+              >
+                <a
+                  role="menuitem"
+                  href={`tel:${SITE.phone1}`}
+                  onClick={onPhoneClick}
+                  className={styles.phoneItem}
+                >
+                  📞 {SITE.phone1}
+                </a>
 
-    <a
-      role="menuitem"
-      href={`tel:${SITE.phone2}`}
-      onClick={() => setPhoneMenuOpen(false)}
-      className={styles.phoneItem}
-    >
-      📞 {SITE.phone2}
-    </a>
-  </div>
-)}
-
+                <a
+                  role="menuitem"
+                  href={`tel:${SITE.phone2}`}
+                  onClick={onPhoneClick}
+                  className={styles.phoneItem}
+                >
+                  📞 {SITE.phone2}
+                </a>
+              </div>
+            )}
           </div>
 
           {/* 📍 WhatsApp cu locație */}
@@ -287,3 +306,4 @@ export default function HeaderClient() {
     </header>
   );
 }
+
