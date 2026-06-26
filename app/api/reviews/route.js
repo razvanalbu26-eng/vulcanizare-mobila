@@ -9,9 +9,7 @@ export async function GET() {
       source: "fallback_no_api_key",
     });
   }
-
-  const searchQuery =
-    "Vulcanizare Mobila Camioane si Autoturisme Non Stop Buzau";
+const searchQuery = "Vulcanizare Mobila Non-Stop Buzau";
 
   try {
     const searchRes = await fetch(
