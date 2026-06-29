@@ -530,3 +530,51 @@
   .galleryRail{ grid-auto-columns: 90%; }
   .galleryCaption{ font-size: 12px; padding: 9px 10px; }
 }
+
+.reviewButtons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-end;
+}
+
+.reviewButton {
+  font-size: 13px;
+  color: var(--text-muted);
+  padding: 10px 12px;
+  border-radius: 14px;
+  border: 1px solid var(--border-soft);
+  background: var(--bg-soft);
+  text-decoration: none;
+  font-weight: 800;
+}
+
+.reviewButton:hover {
+  color: var(--text-main);
+}
+
+/* =========================
+   REVIEWS MOBILE
+========================= */
+
+@media (max-width: 720px) {
+  .reviewsTop {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .reviewButtons {
+    width: 100%;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  .reviewButton {
+    width: 100%;
+    text-align: center;
+    padding: 12px;
+    font-size: 13px;
+    border-radius: 12px;
+  }
+}

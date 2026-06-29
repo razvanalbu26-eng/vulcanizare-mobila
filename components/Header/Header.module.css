@@ -51,7 +51,7 @@
   border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
   color: var(--accent);
   font-weight: 900;
-
+text-decoration: none;
   line-height: 1;
   font-size: 18px;
 }
@@ -273,4 +273,18 @@
 .phoneItem:focus-visible{
   outline: 2px solid color-mix(in srgb, var(--accent) 40%, transparent);
   outline-offset: 2px;
+}
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+
+  color:inherit;
+  text-decoration:none;
+
+  cursor:pointer;
+}
+
+.brand:hover{
+  opacity:.9;
 }

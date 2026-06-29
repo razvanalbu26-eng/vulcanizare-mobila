@@ -160,3 +160,28 @@
     width: 100%;
   }
 }
+.footerRight{
+  display:grid;
+  grid-template-columns: repeat(3, auto);
+  gap:32px;
+  align-items:flex-start;
+}
+
+.footerRight > div{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+
+.footerRight strong{
+  margin-bottom:6px;
+  font-size:14px;
+  color:var(--text-main);
+}
+
+@media (max-width:768px){
+  .footerRight{
+    grid-template-columns:1fr;
+    gap:20px;
+  }
+}

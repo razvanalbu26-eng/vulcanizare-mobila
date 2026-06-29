@@ -31,6 +31,10 @@ export default function HomePage() {
           <SectionCoverage />
         </section>
 
+        <section id="reviews" className={styles.section}>
+          <SectionReviews />
+        </section>
+        
         <section id="services" className={styles.section}>
           <SectionServices />
         </section>
@@ -39,9 +43,6 @@ export default function HomePage() {
           <SectionAssist />
         </section>
 
-        <section id="reviews" className={styles.section}>
-          <SectionReviews />
-        </section>
 
         <section id="gallery" className={styles.section}>
           <SectionGallery />
@@ -57,36 +58,77 @@ export default function HomePage() {
       </main>
 
       <footer className={styles.footer}>
-        <div className={styles.footerInner}>
-          <div className={styles.footerLeft}>
-            <div>
-              © {new Date().getFullYear()} {SITE.brand}. Toate drepturile rezervate.
-            </div>
-            <div className={styles.footerMeta}>
-              Intervenție: {SITE.serviceAreaLabel} · {SITE.baseLabel}
-            </div>
-          </div>
+  <div className={styles.footerInner}>
 
-          <div className={styles.footerRight}>
-            <a className={styles.footerLink} href="/termeni">
-              Termeni și condiții
-            </a>
-            <a className={styles.footerLink} href="/confidentialitate">
-              Politica de confidențialitate
-            </a>
-            <a className={styles.footerLink} href="/vulcanizare-mobila-buzau">
-  Vulcanizare mobilă Buzău
+    <div className={styles.footerLeft}>
+      <div>
+        © {new Date().getFullYear()} {SITE.brand}. Toate drepturile rezervate.
+      </div>
+
+      <div className={styles.footerMeta}>
+        Intervenție: {SITE.serviceAreaLabel} · {SITE.baseLabel}
+      </div>
+    </div>
+
+    <div className={styles.footerRight}>
+
+      <div>
+        <strong>Informații</strong>
+
+        <a className={styles.footerLink} href="/termeni">
+          Termeni și condiții
+        </a>
+
+        <a className={styles.footerLink} href="/confidentialitate">
+          Politica de confidențialitate
+        </a>
+      </div>
+
+      <div>
+        <strong>Servicii</strong>
+
+        <a className={styles.footerLink} href="/vulcanizare-auto-buzau">
+          Vulcanizare auto Buzău
+        </a>
+
+        <a className={styles.footerLink} href="/vulcanizare-camioane">
+          Vulcanizare camioane / TIR
+        </a>
+
+        <a className={styles.footerLink} href="/anvelope-noi-si-sh">
+          Anvelope noi și SH
+        </a>
+      </div>
+
+      <div>
+        <strong>Zone</strong>
+
+        <a className={styles.footerLink} href="/vulcanizare-mobila-buzau">
+          Vulcanizare mobilă Buzău
+        </a>
+
+        <a className={styles.footerLink} href="/vulcanizare-mobila-a7">
+          Vulcanizare mobilă A7
+        </a>
+
+        <a className={styles.footerLink} href="/vulcanizare-mobila-e85">
+          Vulcanizare mobilă E85
+        </a>
+        <a className={styles.footerLink} href="/vulcanizare-mobila-maracineni">
+  Vulcanizare mobilă Mărăcineni
 </a>
-<a className={styles.footerLink} href="/vulcanizare-mobila-a7">
-  Vulcanizare mobilă A7
+<a className={styles.footerLink} href="/vulcanizare-mobila-vernesti">
+  Vulcanizare mobilă Vernești
 </a>
-<a className={styles.footerLink} href="/vulcanizare-camioane">
-  Vulcanizare camioane / TIR
+<a className={styles.footerLink} href="/vulcanizare-mobila-smeeni">
+  Vulcanizare mobilă Smeeni
 </a>
 
-          </div>
-        </div>
-      </footer>
+      </div>
+
+    </div>
+  </div>
+</footer>
     </div>
   );
 }

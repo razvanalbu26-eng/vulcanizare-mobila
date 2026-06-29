@@ -11,10 +11,10 @@ import SectionReviews from "../../components/Sections/SectionReviews";
 import { faqBuzauItems } from "../../lib/faqitems.js";
 
 export const metadata = defaultMetadata({
-  title: "Vulcanizare mobilă Buzău 24/7 – Pană, schimb roată | La Răzvan",
+  title: "Vulcanizare mobilă Smeeni 24/7 – Pană, schimb roată | La Răzvan",
   description:
-    "Vulcanizare mobilă non-stop în Buzău și zonele limitrofe. Pană roată, schimb roată, anvelope noi și SH. Sună sau trimite locația pe WhatsApp.",
-  path: "/vulcanizare-mobila-buzau",
+    "Vulcanizare mobilă în Smeeni și localitățile apropiate. Intervenții non-stop pentru pană, schimb roată, anvelope noi și SH, autoturisme, utilitare și camioane.",
+  path: "/vulcanizare-mobila-smeeni",
 });
 
 export default function Page() {
@@ -24,19 +24,19 @@ export default function Page() {
         <section className={styles.section}>
           <div style={{ maxWidth: 920, margin: "0 auto", padding: "24px 16px" }}>
             <h1 style={{ marginTop: 0 }}>
-              Vulcanizare mobilă în Buzău – intervenție rapidă 24/7
+              Vulcanizare mobilă Smeeni – intervenții rapide 24/7
             </h1>
 
             <p style={{ opacity: 0.9, lineHeight: 1.7 }}>
-              Ai făcut pană în Buzău sau ai nevoie de schimb roată la fața
-              locului? Vulcanizare Mobilă La Răzvan intervine rapid, non-stop,
-              pentru autoturisme, SUV-uri, utilitare, camioane și TIR.
+              Ai făcut pană în Smeeni sau ai nevoie de schimb roată la fața
+              locului? Vulcanizare Mobilă La Răzvan intervine rapid pentru
+              autoturisme, SUV-uri, utilitare, camioane și TIR.
             </p>
 
             <p style={{ opacity: 0.9, lineHeight: 1.7 }}>
-              Cel mai simplu este să trimiți locația pe WhatsApp. Îți spunem
-              timpul estimativ de sosire și venim direct la mașină pentru
-              schimb roată, pană sau înlocuire anvelopă, în funcție de situație.
+              Trimite locația pe WhatsApp și îți comunicăm timpul estimativ de
+              sosire. Intervenim direct la locul unde te afli și încercăm să
+              rezolvăm problema cât mai rapid.
             </p>
 
             <div style={{ marginTop: 18 }}>
@@ -47,25 +47,25 @@ export default function Page() {
 
         <section className={styles.section}>
           <div style={{ maxWidth: 920, margin: "0 auto", padding: "0 16px" }}>
-            <h2>Zone acoperite în Buzău și împrejurimi</h2>
+            <h2>Zone acoperite în apropiere de Smeeni</h2>
 
             <p style={{ opacity: 0.9, lineHeight: 1.7 }}>
-              Intervenim în municipiul Buzău, Mărăcineni, Spătaru și localități
-              apropiate, precum și pe E85/DN2 și A7, în funcție de distanță și
-              disponibilitate.
+              Intervenim în Smeeni și localitățile apropiate, inclusiv
+              Moisica, Călțuna, Udati, Buzău și pe drumurile județene din zonă.
+              În funcție de distanță putem interveni și pe E85 sau A7.
             </p>
 
             <h2 style={{ marginTop: 34 }}>
-              Când ne poți apela?
+              Servicii oferite
             </h2>
 
             <ul style={{ lineHeight: 1.9 }}>
-              <li>✔ Pană de cauciuc în oraș sau pe drum</li>
               <li>✔ Schimb roată la fața locului</li>
-              <li>✔ Anvelopă tăiată, explodată sau deteriorată</li>
-              <li>✔ Mașină blocată în parcare, la domiciliu sau pe carosabil</li>
-              <li>✔ Anvelope noi și SH, în funcție de stoc</li>
-              <li>✔ Intervenții pentru autoturisme, utilitare, camioane și TIR</li>
+              <li>✔ Pană auto</li>
+              <li>✔ Înlocuire anvelope noi și SH (în funcție de stoc)</li>
+              <li>✔ Autoturisme, SUV-uri și utilitare</li>
+              <li>✔ Camioane și TIR</li>
+              <li>✔ Intervenții 24/7</li>
             </ul>
 
             <h2 style={{ marginTop: 34 }}>
@@ -73,10 +73,10 @@ export default function Page() {
             </h2>
 
             <p style={{ opacity: 0.9, lineHeight: 1.7 }}>
-              Nu mai pierzi timp căutând o vulcanizare deschisă și nu mai este
-              nevoie să tractezi mașina pentru o problemă de anvelopă. Venim la
-              locația ta, evaluăm situația și încercăm să rezolvăm problema pe
-              loc, rapid și sigur.
+              Dacă mașina nu mai poate fi deplasată în siguranță din cauza unei
+              pene sau a unei anvelope deteriorate, nu este nevoie să cauți o
+              vulcanizare deschisă. Venim direct la locația ta și efectuăm
+              intervenția acolo unde te afli.
             </p>
           </div>
         </section>
@@ -95,7 +95,7 @@ export default function Page() {
 
         <section className={styles.section}>
           <SectionFAQ
-            title="Întrebări frecvente – Vulcanizare mobilă Buzău"
+            title="Întrebări frecvente – Vulcanizare mobilă Smeeni"
             items={faqBuzauItems}
           />
         </section>

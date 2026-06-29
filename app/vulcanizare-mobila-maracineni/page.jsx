@@ -11,10 +11,10 @@ import SectionReviews from "../../components/Sections/SectionReviews";
 import { faqBuzauItems } from "../../lib/faqitems.js";
 
 export const metadata = defaultMetadata({
-  title: "Vulcanizare mobilă Buzău 24/7 – Pană, schimb roată | La Răzvan",
+  title: "Vulcanizare mobilă Mărăcineni 24/7 – Pană, schimb roată | La Răzvan",
   description:
-    "Vulcanizare mobilă non-stop în Buzău și zonele limitrofe. Pană roată, schimb roată, anvelope noi și SH. Sună sau trimite locația pe WhatsApp.",
-  path: "/vulcanizare-mobila-buzau",
+    "Vulcanizare mobilă în Mărăcineni, județul Buzău. Intervenții non-stop pentru pană, schimb roată, anvelope noi și SH, autoturisme, utilitare și camioane.",
+  path: "/vulcanizare-mobila-maracineni",
 });
 
 export default function Page() {
@@ -24,19 +24,19 @@ export default function Page() {
         <section className={styles.section}>
           <div style={{ maxWidth: 920, margin: "0 auto", padding: "24px 16px" }}>
             <h1 style={{ marginTop: 0 }}>
-              Vulcanizare mobilă în Buzău – intervenție rapidă 24/7
+              Vulcanizare mobilă Mărăcineni – intervenții rapide 24/7
             </h1>
 
             <p style={{ opacity: 0.9, lineHeight: 1.7 }}>
-              Ai făcut pană în Buzău sau ai nevoie de schimb roată la fața
-              locului? Vulcanizare Mobilă La Răzvan intervine rapid, non-stop,
-              pentru autoturisme, SUV-uri, utilitare, camioane și TIR.
+              Ai făcut pană în Mărăcineni sau ai nevoie de schimb roată la fața
+              locului? Vulcanizare Mobilă La Răzvan intervine rapid pentru
+              autoturisme, SUV-uri, utilitare, camioane și TIR.
             </p>
 
             <p style={{ opacity: 0.9, lineHeight: 1.7 }}>
-              Cel mai simplu este să trimiți locația pe WhatsApp. Îți spunem
-              timpul estimativ de sosire și venim direct la mașină pentru
-              schimb roată, pană sau înlocuire anvelopă, în funcție de situație.
+              Trimite locația pe WhatsApp și îți confirmăm timpul estimativ de
+              sosire. Venim direct la mașină pentru pană, schimb roată sau
+              înlocuire anvelopă, în funcție de situație și disponibilitate.
             </p>
 
             <div style={{ marginTop: 18 }}>
@@ -47,36 +47,35 @@ export default function Page() {
 
         <section className={styles.section}>
           <div style={{ maxWidth: 920, margin: "0 auto", padding: "0 16px" }}>
-            <h2>Zone acoperite în Buzău și împrejurimi</h2>
+            <h2>Zone acoperite în apropiere de Mărăcineni</h2>
 
             <p style={{ opacity: 0.9, lineHeight: 1.7 }}>
-              Intervenim în municipiul Buzău, Mărăcineni, Spătaru și localități
+              Intervenim în Mărăcineni, Buzău, Spătaru și localitățile
               apropiate, precum și pe E85/DN2 și A7, în funcție de distanță și
               disponibilitate.
             </p>
 
-            <h2 style={{ marginTop: 34 }}>
-              Când ne poți apela?
-            </h2>
+            <h2 style={{ marginTop: 34 }}>Când ne poți apela?</h2>
 
             <ul style={{ lineHeight: 1.9 }}>
-              <li>✔ Pană de cauciuc în oraș sau pe drum</li>
-              <li>✔ Schimb roată la fața locului</li>
+              <li>✔ Pană auto în Mărăcineni sau în apropiere</li>
+              <li>✔ Schimb roată la domiciliu, în parcare sau pe drum</li>
               <li>✔ Anvelopă tăiată, explodată sau deteriorată</li>
-              <li>✔ Mașină blocată în parcare, la domiciliu sau pe carosabil</li>
-              <li>✔ Anvelope noi și SH, în funcție de stoc</li>
+              <li>✔ Înlocuire anvelope noi și SH, în funcție de stoc</li>
               <li>✔ Intervenții pentru autoturisme, utilitare, camioane și TIR</li>
+              <li>✔ Asistență non-stop, 24/7</li>
             </ul>
 
             <h2 style={{ marginTop: 34 }}>
-              De ce să alegi vulcanizarea mobilă?
+              Vulcanizare mobilă aproape de tine
             </h2>
 
             <p style={{ opacity: 0.9, lineHeight: 1.7 }}>
-              Nu mai pierzi timp căutând o vulcanizare deschisă și nu mai este
-              nevoie să tractezi mașina pentru o problemă de anvelopă. Venim la
-              locația ta, evaluăm situația și încercăm să rezolvăm problema pe
-              loc, rapid și sigur.
+              Pentru șoferii din Mărăcineni, o vulcanizare mobilă este soluția
+              rapidă atunci când mașina nu mai poate fi deplasată în siguranță.
+              În loc să cauți o vulcanizare deschisă sau să chemi platformă,
+              venim direct la locația ta și încercăm să rezolvăm problema pe
+              loc.
             </p>
           </div>
         </section>
@@ -95,7 +94,7 @@ export default function Page() {
 
         <section className={styles.section}>
           <SectionFAQ
-            title="Întrebări frecvente – Vulcanizare mobilă Buzău"
+            title="Întrebări frecvente – Vulcanizare mobilă Mărăcineni"
             items={faqBuzauItems}
           />
         </section>

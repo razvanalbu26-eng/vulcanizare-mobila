@@ -4,7 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import styles from "./Header.module.css";
 import { SITE } from "../../lib/config.js";
 import BurgerMenu from "../BurgerMenu/BurgerMenu.jsx";
-
+import Link from "next/link";
 /* ================= GOOGLE ADS ================= */
 
 function trackPhoneConversion() {
@@ -200,14 +200,23 @@ export default function HeaderClient() {
     <header className={styles.header}>
       <div className={styles.inner}>
         {/* LEFT */}
-        <div className={styles.brand}>
-          <div className={styles.logo}>●</div>
+       <Link
+  href="/"
+  className={styles.brand}
+  aria-label="Acasă"
+>
+  <div className={styles.logo}>●</div>
 
-          <div>
-            <div className={styles.brandName}>{SITE.brand}</div>
-            <div className={styles.brandSub}>{SITE.serviceAreaLabel}</div>
-          </div>
-        </div>
+  <div>
+    <div className={styles.brandName}>
+      {SITE.brand}
+    </div>
+
+    <div className={styles.brandSub}>
+      {SITE.serviceAreaLabel}
+    </div>
+  </div>
+</Link>
 
         {/* RIGHT */}
         <div className={styles.right}>

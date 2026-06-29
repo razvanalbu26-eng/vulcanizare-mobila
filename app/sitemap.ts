@@ -33,7 +33,30 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "weekly",
       priority: 0.9,
     },
-
+{
+  url: `${base}/vulcanizare-auto-buzau`,
+  lastModified: now,
+  changeFrequency: "weekly",
+  priority: 0.9,
+},
+{
+  url: `${base}/vulcanizare-mobila-maracineni`,
+  lastModified: now,
+  changeFrequency: "weekly",
+  priority: 0.8,
+},
+{
+  url: `${base}/vulcanizare-mobila-vernesti`,
+  lastModified: now,
+  changeFrequency: "weekly",
+  priority: 0.8,
+},
+{
+  url: `${base}/vulcanizare-mobila-smeeni`,
+  lastModified: now,
+  changeFrequency: "weekly",
+  priority: 0.8,
+},
     // Pagini legale
     {
       url: `${base}/termeni`,

@@ -62,21 +62,29 @@ export default function SectionReviews() {
               {r?.countText ?? "—"} · feedback real din intervenții
             </div>
           </div>
+<div className={styles.reviewButtons}>
+  {r?.googleUrl && (
+    <a
+      href={r.googleUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={styles.reviewButton}
+    >
+      ⭐ Vezi toate recenziile pe Google
+    </a>
+  )}
 
-          {r?.googleUrl ? (
-            <a
-              href={r.googleUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.reviewsHint}
-            >
-              ⭐ Vezi toate recenziile pe Google
-            </a>
-          ) : (
-            <div className={styles.reviewsHint}>
-              Tip: pentru ETA exact, trimite locația pe WhatsApp.
-            </div>
-          )}
+  {r?.reviewWriteUrl && (
+    <a
+      href={r.reviewWriteUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={styles.reviewButton}
+    >
+      ✍️ Lasă o recenzie
+    </a>
+  )}
+</div>
         </div>
 
         <div className={styles.reviewsGrid}>

@@ -6,9 +6,10 @@ import SectionContact from "../../components/Sections/SectionContact";
 import { faqTirItems } from "../../lib/faqitems.js";
 
 export const metadata = defaultMetadata({
-  title: "Vulcanizare mobilă TIR / Camioane 24/7 – Intervenții la fața locului | La Răzvan",
+  title:
+    "Vulcanizare mobilă camioane / TIR Buzău 24/7 | La Răzvan",
   description:
-    "Vulcanizare mobilă pentru camioane și TIR non-stop. Intervenții la fața locului: pană, schimb roată, înlocuire anvelope. Trimite locația pe WhatsApp.",
+    "Vulcanizare mobilă pentru camioane și TIR în Buzău, pe A7, E85 și zone limitrofe. Intervenții non-stop pentru pană, schimb roată și anvelope.",
   path: "/vulcanizare-camioane",
 });
 
@@ -18,14 +19,40 @@ export default function Page() {
       <main className={styles.main}>
         <section className={styles.section}>
           <div style={{ maxWidth: 920, margin: "0 auto", padding: "24px 16px" }}>
-            <h1 style={{ marginTop: 0 }}>Vulcanizare mobilă camioane / TIR – intervenție 24/7</h1>
+            <h1 style={{ marginTop: 0 }}>
+              Vulcanizare mobilă camioane / TIR în Buzău – intervenție 24/7
+            </h1>
+
             <p style={{ opacity: 0.9, lineHeight: 1.6 }}>
-              Intervenim pentru camioane/TIR în parcare, pe acostament sau la punctul indicat.
-              Trimite locația pe WhatsApp pentru ETA și detalii.
+              Ai pană la camion sau TIR și nu poți ajunge la vulcanizare?
+              Intervenim la fața locului în Buzău, pe A7, E85 și în zonele
+              apropiate pentru schimb roată, pană, înlocuire anvelope și
+              asistență rapidă.
             </p>
+
+            <p style={{ opacity: 0.9, lineHeight: 1.6 }}>
+              Trimite locația pe WhatsApp, spune ce problemă ai și revenim cu
+              un timp estimativ de sosire. Lucrăm non-stop pentru șoferi
+              profesioniști, transportatori și firme cu vehicule comerciale.
+            </p>
+
             <div style={{ marginTop: 14 }}>
               <CTAButtons />
             </div>
+          </div>
+        </section>
+
+        <section className={styles.section}>
+          <div style={{ maxWidth: 920, margin: "0 auto", padding: "0 16px" }}>
+            <h2>Servicii pentru camioane și TIR</h2>
+
+            <ul style={{ lineHeight: 1.8, opacity: 0.9 }}>
+              <li>Vulcanizare mobilă pentru camion și TIR</li>
+              <li>Schimb roată la fața locului</li>
+              <li>Intervenții în parcare, pe drum sau la sediu</li>
+              <li>Asistență pentru pană pe A7, E85 și în județul Buzău</li>
+              <li>Anvelope noi și SH, în funcție de disponibilitate</li>
+            </ul>
           </div>
         </section>
 
@@ -36,7 +63,9 @@ export default function Page() {
           />
         </section>
 
-        <section className={styles.section}><SectionContact /></section>
+        <section className={styles.section}>
+          <SectionContact />
+        </section>
       </main>
     </div>
   );
