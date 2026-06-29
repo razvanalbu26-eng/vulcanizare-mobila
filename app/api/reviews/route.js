@@ -9,7 +9,8 @@ export async function GET() {
       source: "fallback_no_api_key",
     });
   }
-const searchQuery = "Vulcanizare Mobila Non-Stop Buzau";
+const searchQuery =
+  "Vulcanizare Mobila Non-Stop Buzău 120036 Buzău";
 
   try {
     const searchRes = await fetch(
